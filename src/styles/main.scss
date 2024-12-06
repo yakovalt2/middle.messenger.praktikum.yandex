@@ -1,0 +1,25 @@
+:root {
+  --primary-color: #C0A353;
+  --secondary-color: #860038;
+  --background-color: #f4f4f4;
+  --text-color: #515151;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: hsl(0, 0%, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .flex {
+    display: flex;
+  }
