@@ -11,7 +11,7 @@
 
   &__sidebar {
     width: 250px;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     padding: 20px;
     height: 100vh;
     border-right: 1px solid #dddddda1;
@@ -23,7 +23,7 @@
 
   &__title {
     font-size: 1.5em;
-    color: #333;
+    color: var(--text-color);
     margin: 0;
   }
 
@@ -46,22 +46,22 @@
       padding: 10px 15px;
       gap: 20px;
       font-size: 1em;
-      color: #333;
+      color: var(--text-color);
       text-decoration: none;
       border-radius: 12px;
       transition: background-color 0.2s, color 0.2s;
 
       &:hover {
-        background-color: #ddd;
-        color: #000;
+        background-color: var(--background-color);
+        color: var(--black);
       }
 
       &--danger {
-        color: #d9534f;
+        color: var(--danger);
         font-size: .9em;
 
         &:hover {
-          background-color: #fbe3e3;
+          background-color: var(--background-color);
         }
       }
 
@@ -112,7 +112,7 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      background-color: #ddd;
+      background-color: var(--background-color);
       object-fit: cover;
     }
 
@@ -124,22 +124,8 @@
       cursor: pointer;
     }
 
-    &-change {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
-
     &-title {
-      color: #860038;
+      color: var(--secondary-color);
       font-size: 0.9em;
     }
   }
@@ -157,7 +143,7 @@
       font-size: 1.2em;
       font-weight: normal;
       margin-bottom: 15px;
-      color: #333333f9;
+      color: var(--text-color);
     }
   }
 

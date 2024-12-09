@@ -1,6 +1,6 @@
 .sidebar {
     width: 460px;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     font-family: 'Open Sans', sans-serif;
     padding: 15px;
 
@@ -51,7 +51,7 @@
     padding: 10px;
     cursor: pointer;
     border: 1px solid #F5F1F1;
-    background-color: #FAFAFA;
+    background-color: var(--background-color);
     border-radius: 20px;
 
     &__avatar {
