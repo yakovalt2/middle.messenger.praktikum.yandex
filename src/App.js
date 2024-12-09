@@ -6,11 +6,13 @@ import * as Pages from './pages';
 import Button from './components/Button.js';
 import Input from './components/Input.js';
 import Label from './components/Label.js'
+import Link from './components/Link.js';
 
 //Регистрация partials
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('Input', Input);
 Handlebars.registerPartial('Label', Label)
+Handlebars.registerPartial('Link', Link);
 
 export default class App {
   constructor() {

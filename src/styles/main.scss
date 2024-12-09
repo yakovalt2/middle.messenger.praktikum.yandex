@@ -76,4 +76,17 @@ label {
   text-decoration: none;
 }
 
+.link {
+  text-decoration: none;
+  color: inherit;
+
+  &.sidebar__profile-link--text {
+      color: #860038;
+      font-weight: bold;
+
+      &:hover {
+          text-decoration: none;
+      }
+  }
+}
 
