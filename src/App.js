@@ -26,7 +26,7 @@ export default class App {
     page('/register', () => this.showPage('register'));
     page('/chats', () => this.showPage('chats'));
     page('/settings', () => this.showPage('settings'));
-    page('/505', () => this.showPage('page500'))
+    page('/500', () => this.showPage('page500'))
 
     page('*', () => this.showPage('page404'));
 
