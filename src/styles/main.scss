@@ -1,25 +1,79 @@
 :root {
   --primary-color: #C0A353;
   --secondary-color: #860038;
-  --background-color: #f4f4f4;
+  --background-color: #ffffff;
   --text-color: #515151;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: hsl(0, 0%, 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
 
-  .flex {
-    display: flex;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: normal;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-style: medium;
+  background-color: var(--background-color);
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+//Стили для кнопок
+
+.button {
+      padding: 10px 30px;
+      background-color: #C0A353;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 16px;
+      height: 45px;
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }
+}
+
+input {
+  width: 100%;
+  max-width: 454px;
+  height: 45px;
+  padding: 8px;
+  border: 0.2px solid rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  margin-left: 3px;
+  font-size: 12px;
+  color: rgb(0, 0, 0, 0.65);
+}
+
+.menu-item {
+  text-decoration: none;
+}
+
+

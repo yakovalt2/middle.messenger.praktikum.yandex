@@ -24,6 +24,7 @@
     "express-handlebars": "^8.0.1",
     "handlebars": "^4.7.8",
     "lodash-es": "^4.17.21",
+    "page": "^1.11.6",
     "postcss": "^8.4.49",
     "postcss-cli": "^11.0.0",
     "vite-plugin-handlebars": "^2.0.0"

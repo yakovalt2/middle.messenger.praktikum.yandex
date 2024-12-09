@@ -1,33 +1,35 @@
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-</head>
-
 <body>
-  <div class="login">
+  <div class="login flex align-center justify-center">
     <form class="login__form flex" action="/submit-login" method="POST">
       <h1 class="login__title">Регистрация</h1>
+      
       <div class="login__form-group">
-        <label class="login__label" for="username">Логин</label>
-        <input class="login__input" type="text" id="username" name="username" placeholder="Введите ваш логин" required>
+        {{> Label forAttr="email" text="Почта" }}
+        {{> Input id="email" type="text" placeholder="Введите почту" value="" }}
       </div>
+      
       <div class="login__form-group">
-        <label class="login__label" for="password">Пароль</label>
-        <input class="login__input" type="password" id="password" name="password" placeholder="Введите ваш пароль"
-          required>
+        {{> Label forAttr="login" text="Логин" }}
+        {{> Input id="login" type="text" placeholder="Введите логин" value="" }}
       </div>
-       <div class="login__form-group">
-        <label class="login__label" for="password">Пароль</label>
-        <input class="login__input" type="password" id="password" name="password" placeholder="Введите ваш пароль"
-          required>
+      
+      <div class="login__form-group">
+        {{> Label forAttr="second_name" text="Фамилия" }}
+        {{> Input id="second_name" type="text" placeholder="Введите фамилию" value="" }}
       </div>
-       <div class="login__form-group">
-        <label class="login__label" for="password">Пароль</label>
-        <input class="login__input" type="password" id="password" name="password" placeholder="Введите ваш пароль"
-          required>
+      
+      <div class="login__form-group">
+        {{> Label forAttr="first_name" text="Имя" }}
+        {{> Input id="first_name" type="text" placeholder="Введите имя" value="" }}
       </div>
-      <button class="login__button" type="submit">Авторизация</button>
+      
+      <div class="login__form-group">
+        {{> Label forAttr="password" text="Пароль" }}
+        {{> Input id="password" type="password" placeholder="Введите пароль" value="" }}
+      </div>
+      
+      {{> Button id="login-btn" type="submit" label="Регистрация" className="primary-button" }}
+      
       <p class="login__help">
         <a class="login__link" href="/register">Впервые? </a>
       </p>
