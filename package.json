@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "vite preview",
-    "type-check": "tsc --noEmit"
+    "start": "vite",
+    "type-check": "tsc --noEmit",
+    "preview": "vite preview"
   },
   "engines": {
     "node": ">=12"
@@ -16,7 +17,7 @@
     "@types/express": "^5.0.0",
     "sass": "^1.82.0",
     "typescript": "~5.6.2",
-    "vite": "^6.0.1"
+    "vite": "^2.9.18"
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
