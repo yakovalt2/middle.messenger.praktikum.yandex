@@ -27,12 +27,13 @@
         {{> Label forAttr="password" text="Пароль" }}
         {{> Input id="password" type="password" placeholder="Введите пароль" value="" }}
       </div>
+
+      <div class="login__form-group">
+        {{> Label forAttr="phone" text="Телефон" }}
+        {{> Input id="phone" type="text" placeholder="Введите ваш телефон" value="" }}
+      </div>
       
       {{> Button id="login-btn" type="submit" label="Регистрация" className="primary-button" }}
-      
-      <p class="login__help">
-        <a class="login__link" href="/register">Впервые? </a>
-      </p>
     </form>
     <p class="login__error" id="error-message"></p>
   </div>

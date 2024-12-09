@@ -19,17 +19,22 @@ export default class App {
   }
 
   initRoutes() {
-    page('/', () => this.showPage('register'));
+    page('/', () => this.showPage('login'));
     page('/login', () => this.showPage('login'));
     page('/register', () => this.showPage('register'));
     page('/chats', () => this.showPage('chats'));
     page('/settings', () => this.showPage('settings'));
+    page('/505', () => this.showPage('page500'))
+
+    page('*', () => this.showPage('page404'));
 
     page();
   }
 
   showPage(pageName) {
     let template;
+
+    console.log(Pages)
 
     const chats = [
       { id: 1, name: 'Андрей', lastMessage: 'Изображение', timestamp: '19:30' },
@@ -69,8 +74,27 @@ export default class App {
         template = Handlebars.compile(Pages.ChatsPage);
         this.appElement.innerHTML = template({ chats });
         return;
+      case 'page404':
+        document.addEventListener('click', (event) => {
+          const button = event.target.closest('#go-home');
+          if (button) {
+            page('/');
+          }
+        });
+        template = Handlebars.compile(Pages.Page404);
+        break;
+      case 'page500':
+        document.addEventListener('click', (event) => {
+          const button = event.target.closest('#go-home');
+          if (button) {
+            page('/');
+          }
+        });
+        template = Handlebars.compile(Pages.Page500);
+        break;
       default:
-        template = Handlebars.compile(Pages.RegisterPage);
+        template = Handlebars.compile(Pages.Page404);
+        break;
     }
 
     this.appElement.innerHTML = template({});
