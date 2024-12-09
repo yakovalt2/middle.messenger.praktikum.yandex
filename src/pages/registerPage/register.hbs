@@ -5,32 +5,32 @@
       
       <div class="login__form-group">
         {{> Label forAttr="email" text="Почта" }}
-        {{> Input id="email" type="text" placeholder="Введите почту" value="" }}
+        {{> Input id="email" type="text" name="email" placeholder="Введите почту" value="" }}
       </div>
       
       <div class="login__form-group">
         {{> Label forAttr="login" text="Логин" }}
-        {{> Input id="login" type="text" placeholder="Введите логин" value="" }}
+        {{> Input id="login" type="text" name="login" placeholder="Введите логин" value="" }}
       </div>
       
       <div class="login__form-group">
         {{> Label forAttr="second_name" text="Фамилия" }}
-        {{> Input id="second_name" type="text" placeholder="Введите фамилию" value="" }}
+        {{> Input id="second_name" type="text" name="second_name" placeholder="Введите фамилию" value="" }}
       </div>
       
       <div class="login__form-group">
         {{> Label forAttr="first_name" text="Имя" }}
-        {{> Input id="first_name" type="text" placeholder="Введите имя" value="" }}
+        {{> Input id="first_name" type="text" name="first_name" placeholder="Введите имя" value="" }}
       </div>
       
       <div class="login__form-group">
         {{> Label forAttr="password" text="Пароль" }}
-        {{> Input id="password" type="password" placeholder="Введите пароль" value="" }}
+        {{> Input id="password" type="password" name="password" placeholder="Введите пароль" value="" }}
       </div>
 
       <div class="login__form-group">
         {{> Label forAttr="phone" text="Телефон" }}
-        {{> Input id="phone" type="text" placeholder="Введите ваш телефон" value="" }}
+        {{> Input id="phone" type="text" name="phone" placeholder="Введите ваш телефон" value="" }}
       </div>
       
       {{> Button id="login-btn" type="submit" label="Регистрация" className="primary-button" }}

@@ -4,12 +4,12 @@
       
       <div class="login__form-group">
         {{> Label forAttr="login" text="Логин" }}
-        {{> Input id="login" type="text" placeholder="Введите ваш логин" value="" }}
+        {{> Input id="login" type="text" name="login" placeholder="Введите ваш логин" value="" }}
       </div>
       
       <div class="login__form-group">
         {{> Label forAttr="password" text="Пароль" }}
-        {{> Input id="password" type="password" placeholder="Введите ваш пароль" value="" }}
+        {{> Input id="password" type="password" name="password" placeholder="Введите ваш пароль" value="" }}
       </div>
       
       {{> Button id="login-btn" type="submit" label="Авторизация" className="primary-button" }}
