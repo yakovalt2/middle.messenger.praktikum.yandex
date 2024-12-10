@@ -49,7 +49,9 @@
       color: var(--text-color);
       text-decoration: none;
       border-radius: 12px;
-      transition: background-color 0.2s, color 0.2s;
+      transition:
+        background-color 0.2s,
+        color 0.2s;
 
       &:hover {
         background-color: var(--background-color);
@@ -58,7 +60,7 @@
 
       &--danger {
         color: var(--danger);
-        font-size: .9em;
+        font-size: 0.9em;
 
         &:hover {
           background-color: var(--background-color);
@@ -93,7 +95,7 @@
     padding: 50px 80px;
     gap: 20px;
 
-    &>*+* {
+    & > * + * {
       margin-top: 20px;
     }
   }
@@ -133,7 +135,6 @@
   #account {
     display: flex;
     justify-content: space-around;
-
   }
 
   &__password-section {

@@ -1,10 +1,8 @@
-import { defineConfig } from 'vite';
-import handlebars from 'vite-plugin-handlebars';
+import { defineConfig } from "vite";
+import handlebars from "vite-plugin-handlebars";
 
 export default defineConfig({
-  plugins: [
-    handlebars({ }),
-  ],
+  plugins: [handlebars({})],
   server: {
     port: 3000,
   },
@@ -12,4 +10,3 @@ export default defineConfig({
     port: 3000,
   },
 });
-

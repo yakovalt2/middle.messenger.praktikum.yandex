@@ -2,8 +2,9 @@
 
 Функциональность приложения: авторизация и регистрация пользователей, отображение списка чатов и сообщений, настройка профиля пользователя, обработка ошибок (404 и 500 страницы).
 
-### Для работы с проектом используются следующие команды: 
-Установка зависимостей: 
+### Для работы с проектом используются следующие команды:
+
+Установка зависимостей:
 `npm install` </br>
 Сборка проекта:
 `npm run build` <br/>
@@ -12,14 +13,14 @@
 Запуск собранного проекта:
 `npm run start` <br/><br/>
 
+### Ссылки на сверстанные страницы:
 
-### Ссылки на сверстанные страницы: 
-+ [Авторизация](https://messenger-altshuler.netlify.app/login)
-+ [Регистрация](https://messenger-altshuler.netlify.app/register)
-+ [Страница с чатами](https://messenger-altshuler.netlify.app/chats)
-+ [Страница настроек профиля](https://messenger-altshuler.netlify.app/settings)
-+ [Страница 404](https://messenger-altshuler.netlify.app/404)
-+ [Страница 500](https://messenger-altshuler.netlify.app/500)
+- [Авторизация](https://messenger-altshuler.netlify.app/login)
+- [Регистрация](https://messenger-altshuler.netlify.app/register)
+- [Страница с чатами](https://messenger-altshuler.netlify.app/chats)
+- [Страница настроек профиля](https://messenger-altshuler.netlify.app/settings)
+- [Страница 404](https://messenger-altshuler.netlify.app/404)
+- [Страница 500](https://messenger-altshuler.netlify.app/500)
 
 ### Ссылка на сверстанный проект в Figma:
 

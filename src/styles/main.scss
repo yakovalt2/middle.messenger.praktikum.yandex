@@ -1,12 +1,11 @@
 :root {
-  --primary-color: #C0A353;
+  --primary-color: #c0a353;
   --secondary-color: #860038;
   --background-color: #ffffff;
   --text-color: #515151;
   --danger: #d9534f;
   --black: #000;
 }
-
 
 * {
   margin: 0;
@@ -20,7 +19,7 @@ a {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-style: medium;
   background-color: var(--background-color);
   height: 100vh;
@@ -47,7 +46,7 @@ body {
 
 .button {
   padding: 10px 30px;
-  background-color: #C0A353;
+  background-color: #c0a353;
   color: white;
   border: none;
   border-radius: 14px;
@@ -98,7 +97,7 @@ label {
 
 .navbar {
   gap: 40px;
-  background-color: #C0A353;
+  background-color: #c0a353;
   padding: 0 20px;
   height: 40px;
 
