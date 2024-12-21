@@ -16,48 +16,46 @@ Handlebars.registerPartial("Label", Label);
 Handlebars.registerPartial("Link", Link);
 Handlebars.registerPartial("Navigation", Navigation);
 
+interface Chat {
+  id: number;
+  name: string;
+  lastMessage: string;
+  timestamp: string;
+}
+
 export default class App {
+  private appElement: HTMLElement | null;
+
   constructor() {
     this.appElement = document.getElementById("app");
     this.initRoutes();
   }
 
-  initRoutes() {
+  private initRoutes(): void {
     page("/", () => this.showPage("login"));
     page("/login", () => this.showPage("login"));
     page("/register", () => this.showPage("register"));
     page("/chats", () => this.showPage("chats"));
     page("/settings", () => this.showPage("settings"));
     page("/500", () => this.showPage("page500"));
-
     page("*", () => this.showPage("page404"));
 
     page();
   }
 
-  showPage(pageName) {
-    let template;
+  private showPage(pageName: string): void {
+    if (!this.appElement) {
+      console.error("App element not found");
+      return;
+    }
 
-    const chats = [
+    let template: Handlebars.TemplateDelegate | undefined;
+
+    const chats: Chat[] = [
       { id: 1, name: "Андрей", lastMessage: "Изображение", timestamp: "19:30" },
-      {
-        id: 2,
-        name: "Футбол",
-        lastMessage: "Вы: Играем сегодня?",
-        timestamp: "17:10",
-      },
-      {
-        id: 3,
-        name: "Илья",
-        lastMessage: "Друзья, у меня для вас особенный выпуск новостей!...",
-        timestamp: "16:00",
-      },
-      {
-        id: 4,
-        name: "Александр",
-        lastMessage: "Вы: Хорошо",
-        timestamp: "12:17",
-      },
+      { id: 2, name: "Футбол", lastMessage: "Вы: Играем сегодня?", timestamp: "17:10" },
+      { id: 3, name: "Илья", lastMessage: "Друзья, у меня для вас особенный выпуск новостей!...", timestamp: "16:00" },
+      { id: 4, name: "Александр", lastMessage: "Вы: Хорошо", timestamp: "12:17" },
       { id: 5, name: "Вадим", lastMessage: "Привет", timestamp: "вс" },
       { id: 6, name: "Илья", lastMessage: "Вы: Да", timestamp: "вс" },
     ];
@@ -87,7 +85,7 @@ export default class App {
         return;
       case "page404":
         document.addEventListener("click", (event) => {
-          const button = event.target.closest("#go-home");
+          const button = (event.target as HTMLElement).closest("#go-home");
           if (button) {
             page("/");
           }
@@ -96,7 +94,7 @@ export default class App {
         break;
       case "page500":
         document.addEventListener("click", (event) => {
-          const button = event.target.closest("#go-home");
+          const button = (event.target as HTMLElement).closest("#go-home");
           if (button) {
             page("/");
           }

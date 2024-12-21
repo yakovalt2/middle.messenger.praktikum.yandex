@@ -15,6 +15,10 @@
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@types/page": "^1.11.9",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
     "sass": "^1.82.0",
