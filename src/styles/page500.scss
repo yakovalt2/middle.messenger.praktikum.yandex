@@ -1,0 +1,32 @@
+.page-500 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background-color);
+
+  &__content {
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 120px;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+
+  &__text {
+    font-size: 24px;
+    color: var(--text-color);
+  }
+
+  &__subtext {
+    margin: 10px 0 20px;
+    font-size: 16px;
+    color: var(--text-color);
+  }
+
+  &__button {
+    margin-top: 40px;
+  }
+}

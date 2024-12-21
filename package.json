@@ -1,0 +1,33 @@
+{
+  "name": "messenger",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite build && vite preview --port 3000"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@types/express": "^5.0.0",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0",
+    "sass": "^1.82.0",
+    "typescript": "~5.6.2",
+    "vite": "^4.5.5"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "express": "^4.21.2",
+    "express-handlebars": "^8.0.1",
+    "handlebars": "^4.7.8",
+    "lodash-es": "^4.17.21",
+    "page": "^1.11.6",
+    "vite-plugin-handlebars": "^2.0.0"
+  }
+}

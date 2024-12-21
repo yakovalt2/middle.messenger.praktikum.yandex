@@ -1,0 +1,5 @@
+export default `
+  <a href="{{href}}" class="link {{className}}" id="{{id}}">
+    {{text}}
+  </a>
+`;
