@@ -1,41 +1,36 @@
 <main>
-  <div class="login flex align-center justify-center">
-    <form class="login__form flex" action="/submit-login" method="POST">
-      <h1 class="login__title">Регистрация</h1>
+  <div class="register flex align-center justify-center">
+    <form class="register__form flex" action="/submit-register" method="POST">
+      <h1 class="register__title">Регистрация</h1>
       
-      <div class="login__form-group">
-        {{> Label forAttr="email" text="Почта" }}
-        {{> Input id="email" type="text" name="email" placeholder="Введите почту" value="" }}
+      <div class="register__form-group">
+        {{{emailInput}}}
       </div>
       
-      <div class="login__form-group">
-        {{> Label forAttr="login" text="Логин" }}
-        {{> Input id="login" type="text" name="login" placeholder="Введите логин" value="" }}
+      <div class="register__form-group">
+        {{{loginInput}}}
       </div>
       
-      <div class="login__form-group">
-        {{> Label forAttr="second_name" text="Фамилия" }}
-        {{> Input id="second_name" type="text" name="second_name" placeholder="Введите фамилию" value="" }}
+      <div class="register__form-group">
+        {{{secondNameInput}}}
       </div>
       
-      <div class="login__form-group">
-        {{> Label forAttr="first_name" text="Имя" }}
-        {{> Input id="first_name" type="text" name="first_name" placeholder="Введите имя" value="" }}
+      <div class="register__form-group">
+        {{{firstNameInput}}}
       </div>
       
-      <div class="login__form-group">
-        {{> Label forAttr="password" text="Пароль" }}
-        {{> Input id="password" type="password" name="password" placeholder="Введите пароль" value="" }}
+      <div class="register__form-group">
+        {{{passwordInput}}}
       </div>
 
-      <div class="login__form-group">
-        {{> Label forAttr="phone" text="Телефон" }}
-        {{> Input id="phone" type="text" name="phone" placeholder="Введите ваш телефон" value="" }}
+      <div class="register__form-group">
+        {{{phoneInput}}}
       </div>
       
-      {{> Button id="login-btn" type="submit" label="Регистрация" className="primary-button" }}
+      <div class="register__form-group">
+        {{{registerButton}}}
+      </div>
     </form>
-    <p class="login__error" id="error-message"></p>
+    <p class="register__error" id="error-message"></p>
   </div>
 </main>
-

@@ -4,14 +4,14 @@
             <div class="sidebar__header">
                 <h2>Мои чаты</h2>
                 <h3 class="sidebar__profile-link">
-                    {{> Link href="/settings" text="Мой профиль" className="sidebar__profile-link--text" }}
+                    {{!-- {{> Link href="/settings" text="Мой профиль" className="sidebar__profile-link--text" }} --}}
                 </h3>
             </div>
             <div class="sidebar__search">
                 <input type="text" placeholder="Поиск чатов, сообщений" />
             </div>
             <ul class="sidebar__chat-list flex-column">
-                {{#each chats}}
+                {{#each chatsHTML}}
                 <li class="chat-item flex">
                     <div class="chat-item__avatar"></div>
                     <div class="chat-item__info flex-column">

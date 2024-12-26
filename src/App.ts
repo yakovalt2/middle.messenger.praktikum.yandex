@@ -1,111 +1,46 @@
 import page from "page";
-import Handlebars from "handlebars";
-import * as Pages from "./pages";
-
-//Импорт компонентов
-import Button from "./components/Button.js";
-import Input from "./components/Input.js";
-import Label from "./components/Label.js";
-import Link from "./components/Link.js";
-import Navigation from "./components/Navigation.js";
-
-//Регистрация partials
-Handlebars.registerPartial("Button", Button);
-Handlebars.registerPartial("Input", Input);
-Handlebars.registerPartial("Label", Label);
-Handlebars.registerPartial("Link", Link);
-Handlebars.registerPartial("Navigation", Navigation);
-
-interface Chat {
-  id: number;
-  name: string;
-  lastMessage: string;
-  timestamp: string;
-}
+import LoginPage from "./pages/loginPage";
+import RegisterPage from "./pages/registerPage";
+import Navigation from "./components/Navigation";
+import Block from './utils/Block';
+import ChatsPage from "./pages/chatsPage";
+import SettingsPage from "./pages/settingsPage";
 
 export default class App {
   private appElement: HTMLElement | null;
+  private navigation: Navigation;
 
   constructor() {
     this.appElement = document.getElementById("app");
+    this.navigation = new Navigation();
     this.initRoutes();
   }
 
   private initRoutes(): void {
-    page("/", () => this.showPage("login"));
-    page("/login", () => this.showPage("login"));
-    page("/register", () => this.showPage("register"));
-    page("/chats", () => this.showPage("chats"));
-    page("/settings", () => this.showPage("settings"));
-    page("/500", () => this.showPage("page500"));
-    page("*", () => this.showPage("page404"));
-
+    page("/", () => this.showPage(new LoginPage()));
+    page("/login", () => this.showPage(new LoginPage()));
+    page("/register", () => this.showPage(new RegisterPage()));
+    page("/chats", () => this.showPage(new ChatsPage()));
+    page("/settings", () => this.showPage(new SettingsPage()));
     page();
   }
 
-  private showPage(pageName: string): void {
+  private showPage(page: Block): void {
     if (!this.appElement) {
       console.error("App element not found");
       return;
     }
 
-    let template: Handlebars.TemplateDelegate | undefined;
+    this.appElement.innerHTML = "";
 
-    const chats: Chat[] = [
-      { id: 1, name: "Андрей", lastMessage: "Изображение", timestamp: "19:30" },
-      { id: 2, name: "Футбол", lastMessage: "Вы: Играем сегодня?", timestamp: "17:10" },
-      { id: 3, name: "Илья", lastMessage: "Друзья, у меня для вас особенный выпуск новостей!...", timestamp: "16:00" },
-      { id: 4, name: "Александр", lastMessage: "Вы: Хорошо", timestamp: "12:17" },
-      { id: 5, name: "Вадим", lastMessage: "Привет", timestamp: "вс" },
-      { id: 6, name: "Илья", lastMessage: "Вы: Да", timestamp: "вс" },
-    ];
-
-    switch (pageName) {
-      case "login":
-        template = Handlebars.compile(Pages.LoginPage);
-        break;
-      case "register":
-        template = Handlebars.compile(Pages.RegisterPage);
-        break;
-      case "settings":
-        template = Handlebars.compile(Pages.SettingsPage);
-        this.appElement.innerHTML = `${Navigation} ${template({
-          avatar: "https://via.placeholder.com/100",
-          first_name: "",
-          second_name: "",
-          display_name: "",
-          login: "",
-          email: "",
-          phone: "",
-        })}`;
-        return;
-      case "chats":
-        template = Handlebars.compile(Pages.ChatsPage);
-        this.appElement.innerHTML = `${Navigation} ${template({ chats })}`;
-        return;
-      case "page404":
-        document.addEventListener("click", (event) => {
-          const button = (event.target as HTMLElement).closest("#go-home");
-          if (button) {
-            page("/");
-          }
-        });
-        template = Handlebars.compile(Pages.Page404);
-        break;
-      case "page500":
-        document.addEventListener("click", (event) => {
-          const button = (event.target as HTMLElement).closest("#go-home");
-          if (button) {
-            page("/");
-          }
-        });
-        template = Handlebars.compile(Pages.Page500);
-        break;
-      default:
-        template = Handlebars.compile(Pages.Page404);
-        break;
+    const navContent = this.navigation.getContent();
+    if (navContent) {
+      this.appElement.appendChild(navContent);
     }
 
-    this.appElement.innerHTML = `${Navigation} ${template({})}`;
+    const pageContent = page.getContent();
+    if (pageContent) {
+      this.appElement.appendChild(pageContent);
+    }
   }
 }

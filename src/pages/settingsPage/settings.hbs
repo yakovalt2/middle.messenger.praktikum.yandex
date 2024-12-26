@@ -1,86 +1,58 @@
-<main>
-  <div class="settings">
-    <div class="settings__content">
-      <div class="settings__sidebar">
-        <div class="settings__header">
-          <h2 class="settings__title">Настройки</h2>
-        </div>
-        <ul class="settings__menu">
-          <li class="settings__menu-item">
-            <a href="" class="settings__menu-link">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_89_11)">
-                  <path
-                    d="M12 12.98C15.1646 12.98 17.73 10.4146 17.73 7.25002C17.73 4.08543 15.1646 1.52002 12 1.52002C8.83543 1.52002 6.27002 4.08543 6.27002 7.25002C6.27002 10.4146 8.83543 12.98 12 12.98Z"
-                    stroke="black" stroke-width="1.5" stroke-miterlimit="10" />
-                  <path
-                    d="M1.5 23.48L1.87 21.43C2.3071 19.0625 3.55974 16.9229 5.41031 15.3828C7.26088 13.8428 9.59246 12.9997 12 13C14.4104 13.0006 16.7443 13.8465 18.5952 15.3905C20.4462 16.9345 21.6971 19.0788 22.13 21.45L22.5 23.5"
-                    stroke="black" stroke-width="1.5" stroke-miterlimit="10" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_89_11">
-                    <rect width="24" height="24" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-              Аккаунт
-            </a>
-          </li>
-          <li class="settings__menu-item">
-            <a href="" class="settings__menu-link">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_89_32)">
-                  <path
-                    d="M20.59 14.86V10.09C20.5874 7.8126 19.6815 5.62924 18.0711 4.01888C16.4608 2.40851 14.2774 1.50265 12 1.5C9.7226 1.50265 7.53924 2.40851 5.92888 4.01888C4.31851 5.62924 3.41265 7.8126 3.41 10.09V14.86L1.5 16.77V18.68H22.5V16.77L20.59 14.86Z"
-                    stroke="black" stroke-width="1.5" stroke-miterlimit="10" />
-                  <path
-                    d="M14.69 18.6801C14.813 18.9986 14.8708 19.3387 14.86 19.6801C14.86 20.4386 14.5586 21.166 14.0223 21.7024C13.4859 22.2387 12.7585 22.5401 12 22.5401C11.2414 22.5401 10.514 22.2387 9.97764 21.7024C9.44128 21.166 9.13996 20.4386 9.13996 19.6801C9.12909 19.3387 9.1869 18.9986 9.30996 18.6801"
-                    stroke="black" stroke-width="1.5" stroke-miterlimit="10" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_89_32">
-                    <rect width="24" height="24" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-              Уведомления
-            </a>
-          </li>
-          <li class="settings__menu-item">
-            <a href="" class="settings__menu-link settings__menu-link--danger">
-              Удалить аккаунт
-            </a>
-          </li>
-        </ul>
+<main class="settings">
+  <div class="settings__content">
+    <div class="settings__sidebar">
+      <div class="settings__header">
+        <h2 class="settings__title">Настройки</h2>
       </div>
-      <div class="settings__main">
-        <form class="settings__form flex-column">
-          <h3 class="settings__section-title">Аккаунт</h3>
-          <div id="account" class="flex">
-            <div class="settings__avatar flex-column align-center">
-              <img src="{{avatar}}" alt="User Avatar" class="settings__avatar-image" />
-              <label for="avatar" class="settings__avatar-title">Сменить аватар</label>
-              <input type="file" id="avatar" name="avatar" class="settings__avatar-input" hidden />
-            </div>
-            <div class="settings__inputs flex-column">
-              {{> Input id="first_name" name="first_name" type="text" placeholder="Имя" value=first_name }}
-              {{> Input id="second_name" name="second_name" type="text" placeholder="Фамилия" value=second_name }}
-              {{> Input id="display_name" name="display_name" type="text" placeholder="Имя в чате" value=display_name }}
-              {{> Input id="login" name="login" type="text" placeholder="Логин" value=login }}
-              {{> Input id="email" name="email" type="email" placeholder="Email" value=email }}
-              {{> Input id="phone" name="phone" type="tel" placeholder="Телефон" value=phone }}
-              {{> Input id="oldPassword" name="old_password" type="password" placeholder="Старый пароль"
-              value=old_password }}
-              {{> Input id="newPassword" name="new_password" type="password" placeholder="Новый пароль"
-              value=new_password }}
-            </div>
-          </div>
-          <div class="settings__submit-button flex">
-            {{> Button id="login-btn" type="submit" label="Сохранить" className="primary-button" }}
-          </div>
-        </form>
-      </div>
+      <ul class="settings__menu">
+        <li class="settings__menu-item">
+          <a href="" class="settings__menu-link">Аккаунт</a>
+        </li>
+        <li class="settings__menu-item">
+          <a href="" class="settings__menu-link">Уведомления</a>
+        </li>
+        <li class="settings__menu-item">
+          <a
+            href=""
+            class="settings__menu-link settings__menu-link--danger"
+          >Удалить аккаунт</a>
+        </li>
+      </ul>
     </div>
-  </div>
+    <div class="settings__main">
+      <form class="settings__form flex-column">
+        <h3 class="settings__section-title">Аккаунт</h3>
+        <div id="account" class="flex">
+          <div class="settings__avatar flex-column align-center">
+            <img
+              src="{{avatar}}"
+              alt="User Avatar"
+              class="settings__avatar-image"
+            />
+            <label for="avatar" class="settings__avatar-title">Сменить аватар</label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              class="settings__avatar-input"
+              hidden
+            />
+          </div>
+          <div class="settings__inputs flex-column">
+            {{{firstNameInput}}}
+            {{{secondNameInput}}}
+            {{{displayNameInput}}}
+            {{{loginInput}}}
+            {{{emailInput}}}
+            {{{phoneInput}}}
+            {{{oldPasswordInput}}}
+            {{{newPasswordInput}}}
+          </div>
+        </div>
+        <div class="settings__submit-button flex">
+          {{{saveButton}}}
+        </div>
+      </form>
+    </div>
   </div>
 </main>
