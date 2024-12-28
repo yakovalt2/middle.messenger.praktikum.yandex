@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "vite build && vite preview --port 3000",
-    "lint": "eslint 'src/**/*.{ts,js,tsx,jsx}'"
+    "lint": "eslint 'src/**/*.{ts,js,tsx,jsx}'",
+    "lint:styles": "stylelint '**/*.css' '**/*.scss'"
   },
   "engines": {
     "node": ">=12"
@@ -25,6 +26,9 @@
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
     "sass": "^1.82.0",
+    "stylelint": "^16.12.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-scss": "^6.10.0",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
     "vite": "^4.5.5",
