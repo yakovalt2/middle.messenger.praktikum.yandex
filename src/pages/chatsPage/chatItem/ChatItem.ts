@@ -4,6 +4,7 @@ interface ChatItemProps {
   name: string;
   lastMessage: string;
   timestamp: string;
+  [key: string]: unknown;
 }
 
 export default class ChatItem extends Block<ChatItemProps> {

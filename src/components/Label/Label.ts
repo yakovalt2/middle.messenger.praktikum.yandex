@@ -3,6 +3,7 @@ import template from "./Label.hbs?raw";
 import "./Label.scss";
 
 interface LabelProps {
+  [key: string]: unknown;
   forAttr: string;
   text: string;
 }

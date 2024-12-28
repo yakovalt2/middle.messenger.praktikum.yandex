@@ -8,6 +8,7 @@ interface LinkProps {
   className?: string; 
   id?: string; 
   events?: Record<string, (event: Event) => void>; 
+  [key: string]: unknown;
 }
 
 export default class Link extends Block<LinkProps> {
