@@ -1,7 +1,7 @@
 import Block from "../../utils/Block";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { validateField } from "../../utils/validation"; // Импортируем функцию валидации
+import { validateField } from "../../utils/validation"; 
 import template from "./login.hbs?raw";
 
 export default class LoginPage extends Block {

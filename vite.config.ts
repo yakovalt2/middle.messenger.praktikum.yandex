@@ -5,10 +5,10 @@ import handlebars from "vite-plugin-handlebars";
 export default defineConfig({
   plugins: [
     handlebars({
-      partialDirectory: path.resolve(__dirname, "src/components"), // Укажите путь к директории с компонентами
+      partialDirectory: path.resolve(__dirname, "src/components"), 
     }),
   ],
-  assetsInclude: ["**/*.hbs"], // Чтобы Vite включал .hbs файлы как ассеты
+  assetsInclude: ["**/*.hbs"], 
   server: {
     port: 3000,
   },

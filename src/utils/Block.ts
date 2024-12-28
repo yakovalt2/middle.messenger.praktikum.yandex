@@ -87,7 +87,6 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
 
     this.addEvents();
 
-    // Вставляем компоненты обратно
     this.insertChildren();
   }
 
