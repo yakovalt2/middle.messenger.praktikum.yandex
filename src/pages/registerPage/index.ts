@@ -73,12 +73,12 @@ export default class RegisterPage extends Block {
     });
 
     const registerButton = new Button({
-      id: "login-btn",
+      id: "register-btn", 
       type: "submit",
       label: "Регистрация",
       className: "primary-button",
       events: {
-        click: () => this.handleSubmit(),
+        click: (e: Event) => this.handleSubmit(e),
       },
     });
 
@@ -97,7 +97,9 @@ export default class RegisterPage extends Block {
     validateField(input);
   }
 
-  handleSubmit() {
+  handleSubmit(e: Event): void {
+    e.preventDefault(); 
+
     const inputs = Array.from(
       this.getContent()?.querySelectorAll("input") || []
     ) as HTMLInputElement[];
