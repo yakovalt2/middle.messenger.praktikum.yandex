@@ -86,16 +86,26 @@
 }
 
 .chat-area {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin-right: 50px;
+  height: 90vh;
+  width: 100%;
+  justify-content: flex-end;
 
   &__placeholder {
     font-size: 1.2em;
     color: #999;
     text-align: center;
+    align-self: center;
+  }  
+
+  &__input {
+    gap: 10px;
+
+    &-field {
+      input {
+        width: 600px;
+        max-width: none;
+      }
+    }
   }
 }

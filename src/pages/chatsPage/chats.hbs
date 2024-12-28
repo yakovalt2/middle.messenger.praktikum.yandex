@@ -1,34 +1,36 @@
 <main>
-    <div class="container flex">
-        <div class="sidebar">
-            <div class="sidebar__header">
-                <h2>Мои чаты</h2>
-                <h3 class="sidebar__profile-link">
-                    {{!-- {{> Link href="/settings" text="Мой профиль" className="sidebar__profile-link--text" }} --}}
-                </h3>
+  <div class="container flex">
+    <div class="sidebar">
+      <div class="sidebar__header">
+        <h2>Мои чаты</h2>
+        <h3 class="sidebar__profile-link">
+          {{!-- {{> Link href="/settings" text="Мой профиль" className="sidebar__profile-link--text" }} --}}
+        </h3>
+      </div>
+      <div class="sidebar__search">
+        <input type="text" placeholder="Поиск чатов, сообщений" />
+      </div>
+      <ul class="sidebar__chat-list flex-column">
+        {{#each chatsHTML}}
+          <li class="chat-item flex">
+            <div class="chat-item__avatar"></div>
+            <div class="chat-item__info flex-column">
+              <div class="chat-item__name">{{name}}</div>
+              <div class="chat-item__last-message">{{lastMessage}}</div>
             </div>
-            <div class="sidebar__search">
-                <input type="text" placeholder="Поиск чатов, сообщений" />
-            </div>
-            <ul class="sidebar__chat-list flex-column">
-                {{#each chatsHTML}}
-                <li class="chat-item flex">
-                    <div class="chat-item__avatar"></div>
-                    <div class="chat-item__info flex-column">
-                        <div class="chat-item__name">{{name}}</div>
-                        <div class="chat-item__last-message">{{lastMessage}}</div>
-                    </div>
-                    <div class="chat-item__timestamp">{{timestamp}}</div>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-
-
-        <div class="chat-area">
-            <div class="chat-area__placeholder">
-                <p>Выберите чат, чтобы начать общаться</p>
-            </div>
-        </div>
+            <div class="chat-item__timestamp">{{timestamp}}</div>
+          </li>
+        {{/each}}
+      </ul>
     </div>
+
+    <div class="chat-area flex-column">
+      <div class="chat-area__input flex">
+        <div class="chat-area__input-field flex">
+          {{{messageInput}}}
+        </div>
+        {{{sendButton}}}
+      </div>
+    </div>
+  </div>
 </main>

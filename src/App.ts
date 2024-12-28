@@ -5,6 +5,8 @@ import Navigation from "./components/Navigation";
 import Block from './utils/Block';
 import ChatsPage from "./pages/chatsPage";
 import SettingsPage from "./pages/settingsPage";
+import Page404 from "./pages/page404";
+import Page500 from "./pages/page500";
 
 export default class App {
   private appElement: HTMLElement | null;
@@ -22,6 +24,8 @@ export default class App {
     page("/register", () => this.showPage(new RegisterPage()));
     page("/chats", () => this.showPage(new ChatsPage()));
     page("/settings", () => this.showPage(new SettingsPage()));
+    page("/500", () => this.showPage(new Page500()));
+    page("/not-found", () => this.showPage(new Page404));
     page();
   }
 

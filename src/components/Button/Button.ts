@@ -1,16 +1,13 @@
-import Block from "../../utils/Block";
+import Block, { BlockProps } from "../../utils/Block";
 import template from "./Button.hbs?raw";
 import "./Button.scss"
 
-interface ButtonProps {
+interface ButtonProps extends BlockProps {
   id?: string;
   label: string;
   type?: "button" | "submit" | "reset"; 
   className?: string; 
   disabled?: boolean; 
-  events?: {
-    click?: (event: MouseEvent) => void; 
-  };
 }
 
 export default class Button extends Block<ButtonProps> {
@@ -19,10 +16,6 @@ export default class Button extends Block<ButtonProps> {
   }
 
   render(): string {
-    return `
-    <button id="{{id}}" class="button {{className}}" type="{{type}}">
-  {{label}}
-</button>
-`
+    return template
   }
 }

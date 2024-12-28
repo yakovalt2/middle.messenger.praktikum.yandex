@@ -23,11 +23,7 @@
     width: 454px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
-
-  &__form-group {
-    margin-bottom: 15px;
-  }
-
+  
   &__error {
     color: red;
     font-size: 14px;
@@ -50,4 +46,13 @@
       text-decoration: none;
     }
   }
+}
+
+.input--error {
+  border: 1px solid red;
+}
+
+.input--error + .error-message {
+  color: red;
+  font-size: 12px;
 }

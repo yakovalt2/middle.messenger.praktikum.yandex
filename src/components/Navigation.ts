@@ -1,8 +1,6 @@
-import Block from "../utils/Block"
+import Block, { BlockProps } from "../utils/Block"
 
-interface NavigationProps {}
-
-export default class Navigation extends Block<NavigationProps> {
+export default class Navigation extends Block<BlockProps> {
   constructor() {
     super("nav", {});
   }
