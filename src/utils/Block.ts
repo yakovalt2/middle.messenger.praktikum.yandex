@@ -14,7 +14,9 @@ export interface BlockProps {
   [key: string]: unknown;
 }
 
-export default abstract class Block<TProps extends Record<string, unknown> = Record<string, unknown>> { 
+export default abstract class Block<
+  TProps extends Record<string, unknown> = Record<string, unknown>
+> {
   protected props: TProps;
   protected blockProps: BlockProps;
   private eventBus: EventBus<TProps>;
@@ -28,7 +30,11 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
     FLOW_RENDER: "flow:render",
   };
 
-  constructor(tagName: string = "div", props: TProps, blockProps: BlockProps = {}) {
+  constructor(
+    tagName: string = "div",
+    props: TProps,
+    blockProps: BlockProps = {}
+  ) {
     this.meta = { tagName, props };
     this.props = this.makePropsProxy(props);
     this.blockProps = blockProps;
@@ -39,10 +45,28 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
     this.eventBus.emit(Block.EVENTS.INIT);
   }
 
+  public show(): void {
+    if (this.element) {
+      this.element.style.display = "block";
+    }
+  }
+
+  public hide(): void {
+    if (this.element) {
+      this.element.style.display = "none";
+    }
+  }
+
   private registerEvents(eventBus: EventBus<TProps>): void {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDM, this.componentDidMountWrapper.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this.componentDidUpdateWrapper.bind(this));
+    eventBus.on(
+      Block.EVENTS.FLOW_CDM,
+      this.componentDidMountWrapper.bind(this)
+    );
+    eventBus.on(
+      Block.EVENTS.FLOW_CDU,
+      this.componentDidUpdateWrapper.bind(this)
+    );
     eventBus.on(Block.EVENTS.FLOW_RENDER, this.renderComponent.bind(this));
   }
 
@@ -62,7 +86,7 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
 
   protected componentDidMount(): void {}
 
-  private componentDidUpdateWrapper(): void {  
+  private componentDidUpdateWrapper(): void {
     const shouldUpdate = this.componentDidUpdate();
     if (shouldUpdate) {
       this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
@@ -78,17 +102,18 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
       console.warn("Element is not defined during render");
       return;
     }
-
+  
     const propsWithStubs = this.preparePropsWithStubs();
     const compiledHTML = Handlebars.compile(this.render())(propsWithStubs);
-
+  
+    console.log("Rendered HTML:", compiledHTML);
+  
     this.removeEvents();
     this.element.innerHTML = compiledHTML;
-
+  
     this.addEvents();
-
     this.insertChildren();
-  }
+  }  
 
   protected abstract render(): string;
 
@@ -117,10 +142,10 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
   protected addEvents(): void {
     const { events = {} } = this.props;
     const targetElement = this.getTargetElementForEvents();
-  
-    if (targetElement && typeof events === 'object' && events !== null) {
+
+    if (targetElement && typeof events === "object" && events !== null) {
       Object.entries(events).forEach(([eventName, listener]) => {
-        if (listener && typeof listener === 'function') {
+        if (listener && typeof listener === "function") {
           targetElement.addEventListener(
             eventName as keyof HTMLElementEventMap,
             listener
@@ -133,10 +158,10 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
   protected removeEvents(): void {
     const { events = {} } = this.props;
     const targetElement = this.getTargetElementForEvents();
-  
-    if (targetElement && typeof events === 'object' && events !== null) {
+
+    if (targetElement && typeof events === "object" && events !== null) {
       Object.entries(events).forEach(([eventName, listener]) => {
-        if (listener && typeof listener === 'function') {
+        if (listener && typeof listener === "function") {
           targetElement.removeEventListener(
             eventName as keyof HTMLElementEventMap,
             listener
@@ -157,6 +182,7 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
   }
 
   public getContent(): HTMLElement | null {
+    console.log("Getting content for block:", this.element); 
     return this.element;
   }
 
@@ -166,7 +192,7 @@ export default abstract class Block<TProps extends Record<string, unknown> = Rec
     Object.assign(this.props, nextProps);
   }
 
-  private preparePropsWithStubs(): Record<string, unknown> { 
+  private preparePropsWithStubs(): Record<string, unknown> {
     return Object.entries(this.props).reduce((acc, [key, value]) => {
       if (value instanceof Block) {
         acc[key] = `<div data-id="${key}"></div>`;
