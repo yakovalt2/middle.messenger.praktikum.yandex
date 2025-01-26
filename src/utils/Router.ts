@@ -1,4 +1,5 @@
 import Block from "./Block";
+import Navigation from "../components/Navigation";
 
 type BlockClass<
   TProps extends Record<string, unknown> = Record<string, unknown>,
@@ -65,12 +66,14 @@ export default class Router<
   private history: History = window.history;
   private _currentRoute: Route<TProps> | null = null;
   private _rootQuery: string = "";
+  private navigation: Navigation = new Navigation(); // Панель навигации
 
   constructor(rootQuery: string) {
     if (Router.__instance) {
       return Router.__instance as Router<TProps>;
     }
     this._rootQuery = rootQuery;
+    this.navigation = new Navigation();
     Router.__instance = this as Router<Record<string, unknown>>;
   }
 
@@ -81,6 +84,12 @@ export default class Router<
       return;
     }
     root.innerHTML = "";
+
+    const navigationContent = this.navigation.getContent();
+    if (navigationContent) {
+      root.appendChild(navigationContent);
+    }
+
     const pageContent = page.getContent();
     if (pageContent) {
       root.appendChild(pageContent);
