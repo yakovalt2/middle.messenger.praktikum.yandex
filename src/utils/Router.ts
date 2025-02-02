@@ -1,15 +1,14 @@
 import Block from "./Block";
 import Navigation from "../components/Navigation";
+import AuthService from "../api/services/AuthService"; // Импорт сервиса авторизации
+
+const authService = new AuthService();
 
 type BlockClass<
   TProps extends Record<string, unknown> = Record<string, unknown>,
 > = {
   new (props: TProps): Block<TProps>;
 };
-
-type RenderFunction = (rootQuery: string, block: Block) => void;
-
-declare const render: RenderFunction;
 
 class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
   private _pathname: string;
@@ -66,7 +65,7 @@ export default class Router<
   private history: History = window.history;
   private _currentRoute: Route<TProps> | null = null;
   private _rootQuery: string = "";
-  private navigation: Navigation = new Navigation(); // Панель навигации
+  private navigation: Navigation = new Navigation();
 
   constructor(rootQuery: string) {
     if (Router.__instance) {
@@ -109,22 +108,72 @@ export default class Router<
     return this;
   }
 
-  start(): void {
+  async start(): Promise<void> {
     window.onpopstate = ((event: PopStateEvent) => {
       this._onRoute(window.location.pathname);
     }).bind(this);
-    this._onRoute(window.location.pathname);
-  }
 
-  private _onRoute(pathname: string): void {
+    console.log("Запуск роутера...");
+
+    const pathname = window.location.pathname;
+
     const route = this.getRoute(pathname);
+
     if (!route) {
-      console.error(`Route not found for pathname: ${pathname}`);
+      console.warn(`Страница ${pathname} не найдена. Редирект на /not-found`);
+      this.go("/not-found");
       return;
     }
+
+    const isAuthenticated = await this.checkAuth();
+    console.log("Пользователь авторизован?", isAuthenticated);
+
+    const isPublicRoute = [
+      "/login",
+      "/register",
+      "/500",
+      "/not-found",
+    ].includes(pathname);
+
+    if (!isAuthenticated && !isPublicRoute) {
+      console.warn(`Неавторизованный доступ: ${pathname}. Редирект на /login`);
+      this.go("/login");
+      return;
+    }
+
+    this._onRoute(pathname);
+  }
+
+  private async _onRoute(pathname: string): Promise<void> {
+    console.log(`Навигация: ${pathname}`);
+
+    const route = this.getRoute(pathname);
+
+    if (!route) {
+      console.warn(`Маршрут не найден: ${pathname}, редирект на /not-found`);
+      this.go("/not-found");
+      return;
+    }
+
+    const isAuthenticated = await this.checkAuth();
+
+    const isPublicRoute = [
+      "/login",
+      "/register",
+      "/500",
+      "/not-found",
+    ].includes(pathname);
+
+    if (!isAuthenticated && !isPublicRoute) {
+      console.warn(`Неавторизованный доступ: ${pathname}, редирект на /login`);
+      this.go("/login");
+      return;
+    }
+
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
+
     this._currentRoute = route;
     route.render();
   }
@@ -144,5 +193,16 @@ export default class Router<
 
   private getRoute(pathname: string): Route<TProps> | undefined {
     return this.routes.find((route) => route.match(pathname));
+  }
+
+  private async checkAuth(): Promise<boolean> {
+    try {
+      const user = await authService.getUser();
+      console.log("Пользователь авторизован:", user);
+      return true;
+    } catch (error) {
+      console.warn("Пользователь не авторизован");
+      return false;
+    }
   }
 }

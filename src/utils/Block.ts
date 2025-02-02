@@ -106,8 +106,6 @@ export default abstract class Block<
     const propsWithStubs = this.preparePropsWithStubs();
     const compiledHTML = Handlebars.compile(this.render())(propsWithStubs);
   
-    console.log("Rendered HTML:", compiledHTML);
-  
     this.removeEvents();
     this.element.innerHTML = compiledHTML;
   
@@ -182,7 +180,6 @@ export default abstract class Block<
   }
 
   public getContent(): HTMLElement | null {
-    console.log("Getting content for block:", this.element); 
     return this.element;
   }
 

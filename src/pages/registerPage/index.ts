@@ -3,6 +3,10 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { validateField } from "../../utils/validation";
 import template from "./register.hbs?raw";
+import AuthService from "../../api/services/AuthService";
+import Router from "../../utils/Router";
+
+const authService = new AuthService();
 
 export default class RegisterPage extends Block {
   constructor() {
@@ -73,7 +77,7 @@ export default class RegisterPage extends Block {
     });
 
     const registerButton = new Button({
-      id: "register-btn", 
+      id: "register-btn",
       type: "submit",
       label: "Регистрация",
       className: "primary-button",
@@ -97,8 +101,8 @@ export default class RegisterPage extends Block {
     validateField(input);
   }
 
-  handleSubmit(e: Event): void {
-    e.preventDefault(); 
+  async handleSubmit(e: Event): Promise<void> {
+    e.preventDefault();
 
     const inputs = Array.from(
       this.getContent()?.querySelectorAll("input") || []
@@ -115,9 +119,35 @@ export default class RegisterPage extends Block {
     });
 
     if (isValid) {
-      console.log("Form data:", formData);
+      try {
+        await authService.register({
+          first_name: formData.first_name,
+          second_name: formData.second_name,
+          login: formData.login,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+        });
+
+        console.log(formData)
+
+        console.log("✅ Регистрация успешна, переходим в чаты...");
+        const router = new Router("#app");
+        router.go("/chats");
+      } catch (error: any) {
+        if (error.message.includes("409")) {
+          // console.warn(
+          //   "Пользователь уже зарегистрирован, переходим в чаты"
+          // );
+          // const router = new Router("#app");
+          // router.go("/chats");
+          console.error("Ошибка регистрации:", error);
+        } else {
+          console.error("Ошибка регистрации:", error);
+        }
+      }
     } else {
-      console.error("Validation failed");
+      console.error("Валидация не пройдена!");
     }
   }
 

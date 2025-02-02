@@ -19,24 +19,15 @@
         </li>
       </ul>
     </div>
+
     <div class="settings__main">
-      <form class="settings__form flex-column">
+      <form class="settings__form flex-column" onsubmit="return false;">
         <h3 class="settings__section-title">Аккаунт</h3>
         <div id="account" class="flex">
           <div class="settings__avatar flex-column align-center">
-            <img
-              src="{{avatar}}"
-              alt="User Avatar"
-              class="settings__avatar-image"
-            />
+            {{{avatarImage}}}
             <label for="avatar" class="settings__avatar-title">Сменить аватар</label>
-            <input
-              type="file"
-              id="avatar"
-              name="avatar"
-              class="settings__avatar-input"
-              hidden
-            />
+            {{{avatarInput}}}
           </div>
           <div class="settings__inputs flex-column">
             {{{firstNameInput}}}
@@ -45,8 +36,6 @@
             {{{loginInput}}}
             {{{emailInput}}}
             {{{phoneInput}}}
-            {{{oldPasswordInput}}}
-            {{{newPasswordInput}}}
           </div>
         </div>
         <div class="settings__submit-button flex">

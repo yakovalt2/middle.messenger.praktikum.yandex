@@ -3,23 +3,20 @@
     <div class="sidebar">
       <div class="sidebar__header">
         <h2>Мои чаты</h2>
-        <h3 class="sidebar__profile-link">
-          {{!-- {{> Link href="/settings" text="Мой профиль" className="sidebar__profile-link-text" }} --}}
-        </h3>
       </div>
-      <div class="sidebar__search">
-        <input type="text" placeholder="Поиск чатов, сообщений" />
+
+      <div class="sidebar__logout">
+        {{{logoutButton}}}
       </div>
+
+      <div class="sidebar__create-chat">
+        {{{createChatInput}}}
+        {{{createChatButton}}}
+      </div>
+
       <ul class="sidebar__chat-list flex-column">
-        {{#each chatsHTML}}
-          <li class="chat-item flex">
-            <div class="chat-item__avatar"></div>
-            <div class="chat-item__info flex-column">
-              <div class="chat-item__name">{{name}}</div>
-              <div class="chat-item__last-message">{{lastMessage}}</div>
-            </div>
-            <div class="chat-item__timestamp">{{timestamp}}</div>
-          </li>
+        {{#each chats}}
+          {{{this}}}
         {{/each}}
       </ul>
     </div>
