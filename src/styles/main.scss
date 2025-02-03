@@ -1,7 +1,7 @@
 :root {
   --primary-color: #c0a353;
   --secondary-color: #860038;
-  --background-color: #fff;
+  --background-color: #f4f4f4;
   --text-color: #515151;
   --danger: #d9534f;
   --black: #000;
@@ -47,17 +47,36 @@ body {
 }
 
 .navbar {
-  gap: 40px;
-  background-color: #c0a353;
-  padding: 0 20px;
-  height: 40px;
+  position: relative;
+  background-color: #f4f4f4;
+  padding: 5px;
 
-  &__list {
-    gap: 30px;
-    list-style-type: none;
+  .navbar__list {
+    position: absolute;
+    list-style: none;
+    padding: 5px;
+    margin-top: 4px;
+    display: none;
+    width: 200px;
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+
+    &.open {
+      display: block;
+    }
   }
 
-  &__link {
-    color: var(--secondary-color);
+  .navbar__toggle {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: #0056b3;
+    }
   }
 }

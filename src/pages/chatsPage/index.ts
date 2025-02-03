@@ -59,7 +59,6 @@ export default class ChatsPage extends Block {
   async loadChats() {
     try {
       const chats = await chatService.getChats();
-      console.log("Чаты загружены:", chats);
 
       this.setProps({
         chats: chats.map(

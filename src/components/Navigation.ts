@@ -1,15 +1,27 @@
-import Block, { BlockProps } from "../utils/Block"
+import Block, { BlockProps } from "../utils/Block";
 
 export default class Navigation extends Block<BlockProps> {
   constructor() {
-    super("nav", {});
+    super("nav", {
+      isOpen: false,
+      events: {
+        click: (e: Event) => this.handleToggleMenu(e),
+      },
+    });
+  }
+
+  handleToggleMenu(e: Event) {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains("navbar__toggle")) {
+      this.setProps({ isOpen: !this.props.isOpen });
+    }
   }
 
   render(): string {
     return `
-      <nav class="navbar flex align-center">
-        <p class="navbar__message">Выберите страницу:</p>
-        <ul class="navbar__list flex">
+      <nav class="navbar">
+        <button class="navbar__toggle">Открыть меню</button>
+        <ul class="navbar__list ${this.props.isOpen ? "open" : "hidden"}">
           <li class="navbar__item"><a href="/login" class="navbar__link">Логин</a></li>
           <li class="navbar__item"><a href="/register" class="navbar__link">Регистрация</a></li>
           <li class="navbar__item"><a href="/chats" class="navbar__link">Чаты</a></li>
