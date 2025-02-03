@@ -74,7 +74,12 @@ export default class LoginPage extends Block {
           password: formData.password,
         });
 
-        console.log("Login successful, redirecting to /chats");
+        console.log("Login successful, verifying session...");
+
+        const user = await authService.getUser();
+        console.log("Authenticated user:", user);
+
+        console.log("Redirecting to /chats...");
         router.go("/chats");
       } catch (error) {
         console.error("Login failed:", error);

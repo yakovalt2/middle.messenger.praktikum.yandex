@@ -145,7 +145,7 @@ export default class Router<
   }
 
   private async _onRoute(pathname: string): Promise<void> {
-    console.log(`Навигация: ${pathname}`);
+    console.log("Routing to:", pathname);
 
     const route = this.getRoute(pathname);
 
@@ -179,6 +179,7 @@ export default class Router<
   }
 
   go(pathname: string): void {
+    console.log("go() called with:", pathname);
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }

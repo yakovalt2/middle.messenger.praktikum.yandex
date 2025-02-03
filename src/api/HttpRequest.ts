@@ -33,11 +33,11 @@ export class HttpRequest {
         credentials: "include",
         body,
       });
-  
+
       if (!response.ok) {
         throw new Error(`Ошибка ${response.status}: ${await response.text()}`);
       }
-  
+
       return response.json();
     } catch (error) {
       console.error("Ошибка запроса:", error);
@@ -48,11 +48,10 @@ export class HttpRequest {
   private static async sendRequest<T, R>(
     method: string,
     url: string,
-    body?: T
+    body?: T,
+    expectJson: boolean = true
   ): Promise<R> {
     try {
-      console.log(`Запрос: ${method} ${url}`);
-
       const response = await fetch(url, {
         method,
         credentials: "include",
@@ -63,19 +62,21 @@ export class HttpRequest {
         body: body ? JSON.stringify(body) : undefined,
       });
 
-      console.log(`Ответ сервера: ${response.status} ${response.statusText}`);
-
       if (!response.ok) {
         let errorMessage = `Ошибка ${response.status}: ${response.statusText}`;
         try {
           const errorResponse = await response.json();
           errorMessage += ` - ${errorResponse.reason || JSON.stringify(errorResponse)}`;
-        } catch {
-        }
+        } catch {}
         throw new Error(errorMessage);
       }
 
-      return (await response.json()) as R;
+      const contentType = response.headers.get("Content-Type") || "";
+      if (expectJson && contentType.includes("application/json")) {
+        return (await response.json()) as R;
+      } else {
+        return (await response.text()) as R;
+      }
     } catch (error) {
       console.error("Ошибка запроса:", error);
       throw error;
