@@ -1,4 +1,4 @@
-import Block, { BlockProps } from "../../utils/Block";
+import Block, { BlockProps } from "../../framework/Block";
 import template from "./Button.hbs?raw";
 import "./Button.scss"
 

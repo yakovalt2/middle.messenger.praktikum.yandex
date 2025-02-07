@@ -1,4 +1,4 @@
-import Block, { BlockProps } from "../../utils/Block";
+import Block, { BlockProps } from "../../framework/Block";
 import template from './Avatar.hbs?raw'
 
 interface AvatarProps extends BlockProps {

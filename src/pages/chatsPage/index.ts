@@ -1,12 +1,12 @@
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import Block from "../../utils/Block";
+import Block from "../../framework/Block";
 import ChatItem from "../chatsPage/chatItem/ChatItem";
 import template from "./chats.hbs?raw";
 import { validateField } from "../../utils/validation";
 import AuthService from "../../api/services/AuthService";
 import ChatService from "../../api/services/ChatService";
-import Router from "../../utils/Router";
+import Router from "../../framework/Router";
 
 const authService = new AuthService();
 const chatService = new ChatService();
@@ -59,6 +59,8 @@ export default class ChatsPage extends Block {
   async loadChats() {
     try {
       const chats = await chatService.getChats();
+      
+      console.log(chats)
 
       this.setProps({
         chats: chats.map(
@@ -105,6 +107,10 @@ export default class ChatsPage extends Block {
   }
 
   render(): string {
-    return template;
+    return `
+    <div>{{#each chats}}
+          {{{this}}}
+        {{/each}}</div>
+    `
   }
 }

@@ -1,4 +1,4 @@
-import Block from "../../../utils/Block";
+import Block from "../../../framework/Block";
 
 interface ChatItemProps {
   name: string;

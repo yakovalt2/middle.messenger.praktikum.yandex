@@ -1,4 +1,4 @@
-import Block, { BlockProps } from "../../utils/Block";
+import Block, { BlockProps } from "../../framework/Block";
 import template from "./Input.hbs?raw";
 import "./Input.scss";
 

@@ -1,4 +1,4 @@
-import Block from "../../utils/Block"; 
+import Block from "../../framework/Block"; 
 import template from "./page404.hbs?raw"; 
 import Button from "../../components/Button/Button"; 
 

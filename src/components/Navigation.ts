@@ -1,4 +1,4 @@
-import Block, { BlockProps } from "../utils/Block";
+import Block, { BlockProps } from "../framework/Block";
 
 export default class Navigation extends Block<BlockProps> {
   constructor() {

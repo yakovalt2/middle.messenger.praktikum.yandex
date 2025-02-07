@@ -1,4 +1,4 @@
-import Block from "../../utils/Block";
+import Block from "../../framework/Block";
 import Input from "../../components/Input/Input";
 import Avatar from "../../components/Avatar/Avatar";
 import template from "./settings.hbs?raw";

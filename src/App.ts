@@ -4,7 +4,7 @@ import ChatsPage from "./pages/chatsPage";
 import SettingsPage from "./pages/settingsPage";
 import Page404 from "./pages/page404";
 import Page500 from "./pages/page500";
-import Router from "./utils/Router";
+import Router from "./framework/Router";
 
 export default class App {
   private router: Router;

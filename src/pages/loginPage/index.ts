@@ -1,10 +1,10 @@
-import Block from "../../utils/Block";
+import Block from "../../framework/Block";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { validateField } from "../../utils/validation";
 import AuthService from "../../api/services/AuthService";
 import template from "./login.hbs?raw";
-import Router from "../../utils/Router";
+import Router from "../../framework/Router";
 
 const authService = new AuthService();
 const router = new Router("#app");
