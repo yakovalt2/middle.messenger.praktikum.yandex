@@ -19,7 +19,6 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
   constructor(
     pathname: string,
     view: BlockClass<TProps>,
-    props: { rootQuery: string },
     showPageCallback: (page: Block) => void,
   ) {
     this._pathname = pathname;
