@@ -66,7 +66,6 @@ export default class LoginPage extends Block {
     });
 
     if (isValid) {
-      console.log("Form data:", formData);
 
       try {
         await authService.login({

@@ -15,7 +15,7 @@ export interface BlockProps {
 }
 
 export default abstract class Block<
-  TProps extends Record<string, unknown> = Record<string, unknown>
+  TProps extends Record<string, unknown> = Record<string, unknown>,
 > {
   protected props: TProps;
   protected blockProps: BlockProps;
@@ -73,6 +73,7 @@ export default abstract class Block<
   private init(): void {
     this.element = this.createDocumentElement(this.meta.tagName);
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
   private componentDidMountWrapper(): void {
@@ -86,34 +87,38 @@ export default abstract class Block<
 
   protected componentDidMount(): void {}
 
-  private componentDidUpdateWrapper(): void {
-    const shouldUpdate = this.componentDidUpdate();
+  private componentDidUpdateWrapper(oldProps: TProps, newProps: TProps): void {
+    const shouldUpdate = this.componentDidUpdate(oldProps, newProps);
     if (shouldUpdate) {
       this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  protected componentDidUpdate(): boolean {
-    return true;
+  componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
+    if (JSON.stringify(oldProps) !== JSON.stringify(newProps)) {
+      return true;
+    }
+    return false;
   }
 
   private renderComponent(): void {
     if (!this.element) {
-      console.warn("Element is not defined during render");
       return;
     }
-  
+
     const propsWithStubs = this.preparePropsWithStubs();
     const compiledHTML = Handlebars.compile(this.render())(propsWithStubs);
-  
+
     this.removeEvents();
     this.element.innerHTML = compiledHTML;
-  
+
     this.addEvents();
     this.insertChildren();
-  }  
+  }
 
-  protected abstract render(): string;
+  protected render(): string {
+    return "";
+  }
 
   private createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
@@ -126,9 +131,11 @@ export default abstract class Block<
         return typeof value === "function" ? value.bind(target) : value;
       },
       set: (target, prop: string, value) => {
-        const oldProps = { ...target };
+        const oldProps = { ...target }; 
         target[prop as keyof TProps] = value;
-        this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, target);
+  
+        this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, { ...target }); 
+  
         return true;
       },
       deleteProperty() {
@@ -184,20 +191,37 @@ export default abstract class Block<
   }
 
   public setProps(nextProps: Partial<TProps>): void {
-    if (!nextProps) return;
+  if (!nextProps) return;
 
-    Object.assign(this.props, nextProps);
+  const oldProps = { ...this.props };
+
+  Object.assign(this.props, nextProps);
+  this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
+}
+
+  public getProp<K extends keyof TProps>(key: K): TProps[K] {
+    return this.props[key];
   }
 
   private preparePropsWithStubs(): Record<string, unknown> {
-    return Object.entries(this.props).reduce((acc, [key, value]) => {
-      if (value instanceof Block) {
-        acc[key] = `<div data-id="${key}"></div>`;
-      } else {
-        acc[key] = value;
-      }
-      return acc;
-    }, {} as Record<string, unknown>);
+    return Object.entries(this.props).reduce(
+      (acc, [key, value]) => {
+        if (value instanceof Block) {
+          acc[key] = `<div data-id="${key}"></div>`;
+        } else if (
+          Array.isArray(value) &&
+          value.every((v) => v instanceof Block)
+        ) {
+          acc[key] = value
+            .map((_, index) => `<div data-id="${key}-${index}"></div>`)
+            .join("");
+        } else {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {} as Record<string, unknown>
+    );
   }
 
   private insertChildren(): void {
@@ -209,6 +233,19 @@ export default abstract class Block<
           stub.replaceWith(content);
         }
         value.eventBus.emit(Block.EVENTS.FLOW_CDM);
+      }
+
+      if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
+        value.forEach((child, index) => {
+          const stub = this.element!.querySelector(
+            `[data-id="${key}-${index}"]`
+          );
+          const content = child.getContent();
+          if (stub && content) {
+            stub.replaceWith(content);
+          }
+          child.eventBus.emit(Block.EVENTS.FLOW_CDM);
+        });
       }
     });
   }

@@ -1,24 +1,79 @@
-import Block from "../../../framework/Block";
+import Block, { BlockProps } from "../../../framework/Block";
+import { chatService } from "../../../api/services"
+import template from "./ChatItem.hbs?raw";
+import store from "../../../framework/Store";  
 
-interface ChatItemProps {
+interface ChatItemProps extends BlockProps {
+  id: number;
   name: string;
-  lastMessage: string;
-  timestamp: string;
-  [key: string]: unknown;
+  selected: boolean;
 }
 
-export default class ChatItem extends Block<ChatItemProps> {
+class ChatItem extends Block<ChatItemProps> {
+
   constructor(props: ChatItemProps) {
-    super("li", props);
+    super("li", {
+      ...props,
+      events: {
+        click: () => this.handleChatClick(),
+      },
+    });
   }
 
+  async handleChatClick() {
+    const { id, name, selected } = this.props;
+    console.log("Chat clicked:", { id, name, selected });
+  
+    try {
+      chatService.disconnect();
+
+      store.set("chatsMessages", []);
+  
+      store.set("selectedChatId", id);
+  
+      const token = await chatService.getChatToken(id);
+  
+      chatService.connectToChat(3340, id, token, (message) => {
+        if (Array.isArray(message)) {
+          message.forEach((msg) => {
+            if (msg.type === "message") {
+              this.addMessageToStore(id, msg);  
+            }
+          });
+        } else if (message.type === "message") {
+          this.addMessageToStore(id, message);  
+        }
+      });
+    } catch (error) {
+      console.error("Failed to get chat token or connect to WebSocket:", error);
+    }
+  }
+  
+  
+
+  // Добавление сообщения в store
+  addMessageToStore(chatId: number, message: any) {
+    const currentState = store.getState();
+    const chatEntry = currentState.chatsMessages.find((c) => c.id === chatId);
+  
+    if (chatEntry) {
+      store.set("chatsMessages", currentState.chatsMessages.map(c =>
+        c.id === chatId
+          ? { ...c, messages: [...c.messages, message] }
+          : c
+      ));
+    } else {
+      store.set("chatsMessages", [
+        ...currentState.chatsMessages,
+        { id: chatId, messages: [message] }
+      ]);
+    }
+  
+    console.log(store.getState().chatsMessages);
+  }
   render(): string {
-    return `
-      <div class="chat-item">
-        <div class="chat-name">{{name}}</div>
-        <div class="chat-last-message">{{lastMessage}}</div>
-        <div class="chat-timestamp">{{timestamp}}</div>
-      </div>
-    `;
+    return template;
   }
 }
+
+export default ChatItem;

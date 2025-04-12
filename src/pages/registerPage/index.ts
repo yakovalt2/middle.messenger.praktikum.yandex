@@ -136,11 +136,11 @@ export default class RegisterPage extends Block {
         router.go("/chats");
       } catch (error: any) {
         if (error.message.includes("409")) {
-          // console.warn(
-          //   "Пользователь уже зарегистрирован, переходим в чаты"
-          // );
-          // const router = new Router("#app");
-          // router.go("/chats");
+          console.warn(
+            "Пользователь уже зарегистрирован, переходим в чаты"
+          );
+          const router = new Router("#app");
+          router.go("/chats");
           console.error("Ошибка регистрации:", error);
         } else {
           console.error("Ошибка регистрации:", error);

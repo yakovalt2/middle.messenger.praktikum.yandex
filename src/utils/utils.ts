@@ -7,7 +7,7 @@ export type Indexed<T = any> = {
 export const utils = {
   isEqual,
   queryStringify,
-  set
+  set,
 };
 
 function isEqual(a: object, b: object): boolean {
@@ -84,36 +84,24 @@ function queryStringify(data: StringIndexed): string | never {
   }, "");
 }
 
-function set(
-  object: Indexed | unknown,
-  path: string,
-  value: unknown
-): Indexed | unknown {
-  console.log(path);
-
+export function set(object: Indexed, path: string, value: unknown): Indexed {
   if (typeof path !== "string") {
     throw new Error("path must be string");
   }
 
-  if (typeof object !== "object" || object === null) {
-    return object;
-  }
-
   const keys = path.split(".");
-  let current = object as Indexed;
+  let current = object;
 
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-
-    if (i === keys.length - 1) {
+  keys.forEach((key, index) => {
+    if (index === keys.length - 1) {
       current[key] = value;
     } else {
-      if (typeof current[key] !== "object" || current[key] === null) {
+      if (!current[key]) {
         current[key] = {};
       }
       current = current[key] as Indexed;
     }
-  }
+  });
 
   return object;
 }

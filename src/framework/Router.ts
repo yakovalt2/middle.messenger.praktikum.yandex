@@ -113,8 +113,6 @@ export default class Router<
       this._onRoute(window.location.pathname);
     }).bind(this);
 
-    console.log("Запуск роутера...");
-
     const pathname = window.location.pathname;
 
     const route = this.getRoute(pathname);
@@ -126,7 +124,6 @@ export default class Router<
     }
 
     const isAuthenticated = await this.checkAuth();
-    console.log("Пользователь авторизован?", isAuthenticated);
 
     const isPublicRoute = [
       "/login",
@@ -145,7 +142,6 @@ export default class Router<
   }
 
   private async _onRoute(pathname: string): Promise<void> {
-    console.log("Routing to:", pathname);
 
     const route = this.getRoute(pathname);
 
@@ -179,7 +175,6 @@ export default class Router<
   }
 
   go(pathname: string): void {
-    console.log("go() called with:", pathname);
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }

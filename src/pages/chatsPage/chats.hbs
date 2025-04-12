@@ -1,5 +1,7 @@
 <main>
   <div class="container flex">
+    {{{modalAddUser}}}
+
     <div class="sidebar">
       <div class="sidebar__header">
         <h2>Мои чаты</h2>
@@ -11,16 +13,19 @@
       </div>
 
       <ul class="sidebar__chat-list flex-column">
-        {{#each chats}}
-          {{{this}}}
-        {{/each}}
+        {{{chatsList}}}
       </ul>
     </div>
 
     <div class="chat-area flex-column">
+      <div class="chat-area__messages">
+        {{{messagesList}}}
+      </div>
+
       <div class="chat-area__input flex">
-        <div class="chat-area__input-field flex">
+        <div class="chat-area__input-field">
           {{{messageInput}}}
+          {{{openModalButton}}}
         </div>
         {{{sendButton}}}
       </div>
