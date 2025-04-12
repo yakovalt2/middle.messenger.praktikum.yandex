@@ -94,15 +94,15 @@ export default class ChatService {
     chatId: number,
     token: string,
     onMessage: (
-      message: WebSocketServerMessage | WebSocketServerMessage[]
-    ) => void
+      message: WebSocketServerMessage | WebSocketServerMessage[],
+    ) => void,
   ): void {
     if (this.socket) {
       this.disconnect();
     }
 
     this.socket = new WebSocket(
-      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`,
     );
 
     this.socket.onopen = () => {
@@ -130,11 +130,14 @@ export default class ChatService {
   }
 
   sendMessage(message: OutgoingMessage): void {
-    if (message.type === "message" && (!message.content || message.content.trim() === "")) {
+    if (
+      message.type === "message" &&
+      (!message.content || message.content.trim() === "")
+    ) {
       console.error("Нельзя отправить пустое сообщение");
       return;
     }
-  
+
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(message));
     } else {
@@ -142,7 +145,6 @@ export default class ChatService {
         console.log("socket.readyState:", this.socket.readyState);
       }
     }
-    
   }
 
   getOldMessages(offset: number): void {

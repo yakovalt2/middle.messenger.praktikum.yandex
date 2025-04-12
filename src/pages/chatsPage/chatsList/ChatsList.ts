@@ -31,7 +31,7 @@ class ChatsListBase extends Block<ChatsListProps> {
           events: {
             click: () => props.onChatClick?.(chat.id),
           },
-        })
+        }),
     );
 
     super("div", {
@@ -42,12 +42,12 @@ class ChatsListBase extends Block<ChatsListProps> {
 
   componentDidUpdate(
     oldProps: ChatsListProps,
-    newProps: ChatsListProps
+    newProps: ChatsListProps,
   ): boolean {
     const oldItems = oldProps.chatItems ?? [];
     const newItems = newProps.chatItems ?? [];
 
-    if (!isEqual(oldItems,newItems)) {
+    if (!isEqual(oldItems, newItems)) {
       const chatsList = newItems.map(
         (chat) =>
           new ChatItem({
@@ -57,7 +57,7 @@ class ChatsListBase extends Block<ChatsListProps> {
             events: {
               click: () => newProps.onChatClick?.(chat.id),
             },
-          })
+          }),
       );
 
       this.setProps({ chatsList });

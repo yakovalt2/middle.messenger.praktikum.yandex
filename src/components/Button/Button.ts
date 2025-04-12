@@ -1,13 +1,13 @@
 import Block, { BlockProps } from "../../framework/Block";
 import template from "./Button.hbs?raw";
-import "./Button.scss"
+import "./Button.scss";
 
 interface ButtonProps extends BlockProps {
   id?: string;
   label: string;
-  type?: "button" | "submit" | "reset"; 
-  className?: string; 
-  disabled?: boolean; 
+  type?: "button" | "submit" | "reset";
+  className?: string;
+  disabled?: boolean;
 }
 
 export default class Button extends Block<ButtonProps> {
@@ -16,6 +16,6 @@ export default class Button extends Block<ButtonProps> {
   }
 
   render(): string {
-    return template
+    return template;
   }
 }

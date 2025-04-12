@@ -21,7 +21,7 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
     pathname: string,
     view: BlockClass<TProps>,
     props: { rootQuery: string },
-    showPageCallback: (page: Block) => void
+    showPageCallback: (page: Block) => void,
   ) {
     this._pathname = pathname;
     this._blockClass = view;
@@ -51,7 +51,7 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
       this._block = new this._blockClass({} as TProps);
     }
     this._showPageCallback(
-      this._block as unknown as Block<Record<string, unknown>>
+      this._block as unknown as Block<Record<string, unknown>>,
     );
     this._block.show();
   }
@@ -102,7 +102,7 @@ export default class Router<
       pathname,
       block,
       { rootQuery: this._rootQuery },
-      this.showPage.bind(this)
+      this.showPage.bind(this),
     );
     this.routes.push(route);
     return this;
@@ -142,7 +142,6 @@ export default class Router<
   }
 
   private async _onRoute(pathname: string): Promise<void> {
-
     const route = this.getRoute(pathname);
 
     if (!route) {

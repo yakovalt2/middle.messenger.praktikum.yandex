@@ -18,7 +18,7 @@ class MessagesList extends Block<MessagesListProps> {
       messages: props.messages.map((msg) => ({
         content: msg.content,
         time: new Date(msg.time).toLocaleTimeString(),
-        isMyMessage: true //поменять
+        isMyMessage: true, //поменять
       })),
     });
   }
@@ -30,7 +30,9 @@ class MessagesList extends Block<MessagesListProps> {
 
 const mapStateToProps = (state: AppState) => {
   const selectedChatId = state.selectedChatId;
-  const chatMessagesEntry = state.chatsMessages.find((c) => c.id === selectedChatId);
+  const chatMessagesEntry = state.chatsMessages.find(
+    (c) => c.id === selectedChatId,
+  );
 
   return {
     messages: chatMessagesEntry ? chatMessagesEntry.messages : [],

@@ -3,11 +3,11 @@ import template from "./Input.hbs?raw";
 import "./Input.scss";
 
 interface InputProps extends BlockProps {
-  type: string;       
-  id: string;         
-  className?: string; 
+  type: string;
+  id: string;
+  className?: string;
   name: string;
-  placeholder?: string; 
+  placeholder?: string;
   value?: string;
   events?: {
     [key: string]: (event: Event) => void;
@@ -17,7 +17,7 @@ interface InputProps extends BlockProps {
 export default class Input extends Block<InputProps> {
   constructor(props: InputProps) {
     super("div", props, {
-      elementForEvents: "input"
+      elementForEvents: "input",
     });
   }
 

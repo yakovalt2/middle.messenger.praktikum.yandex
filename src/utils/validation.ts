@@ -22,7 +22,7 @@ export const validationRules: ValidationRules = {
   phone: /^\+?\d{1,4}?[-.\s]?\(?\d{1,4}?\)?[-.\s]?\d{1,9}$/,
 
   // message — не должно быть пустым.
-  message: /^.+$/, 
+  message: /^.+$/,
 };
 
 export function validateField(input: HTMLInputElement): boolean {

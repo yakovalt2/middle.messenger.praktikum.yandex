@@ -62,7 +62,7 @@ function queryStringify(data: StringIndexed): string | never {
           ...result,
           [`${key}[${index}]`]: arrData,
         }),
-        {}
+        {},
       );
 
       return `${result}${queryStringify(arrayValue)}${endLine}`;
@@ -74,7 +74,7 @@ function queryStringify(data: StringIndexed): string | never {
           ...result,
           [`${key}[${objKey}]`]: value[objKey],
         }),
-        {}
+        {},
       );
 
       return `${result}${queryStringify(objValue)}${endLine}`;

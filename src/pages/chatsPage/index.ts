@@ -25,7 +25,9 @@ class ChatsPage extends Block<ChatsPageProps> {
       ...props,
 
       chatsList: new ChatsList({
-        onChatClick: (id: number) => { this.handleChatClick(id); },
+        onChatClick: (id: number) => {
+          this.handleChatClick(id);
+        },
       }),
 
       messagesList: new MessagesList({ messages: props.messages || [] }),
@@ -103,7 +105,9 @@ class ChatsPage extends Block<ChatsPageProps> {
   }
 
   async handleCreateChat() {
-    const input = this.getContent()?.querySelector("#createChat") as HTMLInputElement;
+    const input = this.getContent()?.querySelector(
+      "#createChat",
+    ) as HTMLInputElement;
     const chatTitle = input?.value;
     if (!chatTitle) return console.error("Введите название чата!");
     try {
@@ -134,7 +138,9 @@ class ChatsPage extends Block<ChatsPageProps> {
   }
 
   handleSendMessage() {
-    const input = this.getContent()?.querySelector("#message") as HTMLInputElement;
+    const input = this.getContent()?.querySelector(
+      "#message",
+    ) as HTMLInputElement;
     const messageContent = input?.value.trim();
     if (!messageContent) return;
     const selectedChatId = store.getState().selectedChatId;
@@ -148,7 +154,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
   handleIncomingMessage(chatId: number, data: any) {
     const currentState = store.getState();
-    const chatEntry = currentState.chatsMessages.find(c => c.id === chatId);
+    const chatEntry = currentState.chatsMessages.find((c) => c.id === chatId);
 
     const processMessage = (msg: any) => ({
       id: msg.id,
@@ -158,7 +164,9 @@ class ChatsPage extends Block<ChatsPageProps> {
     });
 
     if (Array.isArray(data)) {
-      const messages = data.filter(msg => msg.type === "message").map(processMessage);
+      const messages = data
+        .filter((msg) => msg.type === "message")
+        .map(processMessage);
       if (chatEntry) {
         chatEntry.messages = [...messages.reverse(), ...chatEntry.messages];
       } else {
@@ -187,7 +195,9 @@ class ChatsPage extends Block<ChatsPageProps> {
 const mapStateToProps = (state: AppState) => {
   const selectedChatId = state.selectedChatId;
   return {
-    messages: state.chatsMessages.find(chat => chat.id === selectedChatId)?.messages || [],
+    messages:
+      state.chatsMessages.find((chat) => chat.id === selectedChatId)
+        ?.messages || [],
   };
 };
 

@@ -105,7 +105,7 @@ export default class RegisterPage extends Block {
     e.preventDefault();
 
     const inputs = Array.from(
-      this.getContent()?.querySelectorAll("input") || []
+      this.getContent()?.querySelectorAll("input") || [],
     ) as HTMLInputElement[];
 
     const formData: Record<string, string> = {};
@@ -129,16 +129,14 @@ export default class RegisterPage extends Block {
           phone: formData.phone,
         });
 
-        console.log(formData)
+        console.log(formData);
 
         console.log("✅ Регистрация успешна, переходим в чаты...");
         const router = new Router("#app");
         router.go("/chats");
       } catch (error: any) {
         if (error.message.includes("409")) {
-          console.warn(
-            "Пользователь уже зарегистрирован, переходим в чаты"
-          );
+          console.warn("Пользователь уже зарегистрирован, переходим в чаты");
           const router = new Router("#app");
           router.go("/chats");
           console.error("Ошибка регистрации:", error);

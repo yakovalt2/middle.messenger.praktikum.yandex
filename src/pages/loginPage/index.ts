@@ -52,7 +52,7 @@ export default class LoginPage extends Block {
 
   async handleSubmit() {
     const inputs = Array.from(
-      this.getContent()?.querySelectorAll("input") || []
+      this.getContent()?.querySelectorAll("input") || [],
     ) as HTMLInputElement[];
 
     const formData: Record<string, string> = {};
@@ -66,7 +66,6 @@ export default class LoginPage extends Block {
     });
 
     if (isValid) {
-
       try {
         await authService.login({
           login: formData.login,

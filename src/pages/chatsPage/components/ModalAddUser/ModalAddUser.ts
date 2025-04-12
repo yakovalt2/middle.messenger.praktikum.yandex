@@ -4,7 +4,7 @@ import Button from "../../../../components/Button/Button";
 import { chatService } from "../../../../api/services";
 import store from "../../../../framework/Store";
 import template from "./ModalAddUser.hbs?raw";
-import './ModalAddUser.scss'
+import "./ModalAddUser.scss";
 
 interface ModalAddUserProps extends BlockProps {
   onClose: () => void;
@@ -36,11 +36,13 @@ class ModalAddUser extends Block<ModalAddUserProps> {
   }
 
   async handleAddUser() {
-    const input = this.getContent()?.querySelector("#addUserInput") as HTMLInputElement;
+    const input = this.getContent()?.querySelector(
+      "#addUserInput",
+    ) as HTMLInputElement;
     const userId = Number(input.value);
     const chatId = store.getState().selectedChatId;
 
-    console.log(chatId)
+    console.log(chatId);
 
     if (!userId || !chatId) {
       console.error("Не выбран чат или не введён userId");

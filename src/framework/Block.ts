@@ -33,7 +33,7 @@ export default abstract class Block<
   constructor(
     tagName: string = "div",
     props: TProps,
-    blockProps: BlockProps = {}
+    blockProps: BlockProps = {},
   ) {
     this.meta = { tagName, props };
     this.props = this.makePropsProxy(props);
@@ -61,11 +61,11 @@ export default abstract class Block<
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(
       Block.EVENTS.FLOW_CDM,
-      this.componentDidMountWrapper.bind(this)
+      this.componentDidMountWrapper.bind(this),
     );
     eventBus.on(
       Block.EVENTS.FLOW_CDU,
-      this.componentDidUpdateWrapper.bind(this)
+      this.componentDidUpdateWrapper.bind(this),
     );
     eventBus.on(Block.EVENTS.FLOW_RENDER, this.renderComponent.bind(this));
   }
@@ -131,11 +131,11 @@ export default abstract class Block<
         return typeof value === "function" ? value.bind(target) : value;
       },
       set: (target, prop: string, value) => {
-        const oldProps = { ...target }; 
+        const oldProps = { ...target };
         target[prop as keyof TProps] = value;
-  
-        this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, { ...target }); 
-  
+
+        this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, { ...target });
+
         return true;
       },
       deleteProperty() {
@@ -153,7 +153,7 @@ export default abstract class Block<
         if (listener && typeof listener === "function") {
           targetElement.addEventListener(
             eventName as keyof HTMLElementEventMap,
-            listener
+            listener,
           );
         }
       });
@@ -169,7 +169,7 @@ export default abstract class Block<
         if (listener && typeof listener === "function") {
           targetElement.removeEventListener(
             eventName as keyof HTMLElementEventMap,
-            listener
+            listener,
           );
         }
       });
@@ -191,13 +191,13 @@ export default abstract class Block<
   }
 
   public setProps(nextProps: Partial<TProps>): void {
-  if (!nextProps) return;
+    if (!nextProps) return;
 
-  const oldProps = { ...this.props };
+    const oldProps = { ...this.props };
 
-  Object.assign(this.props, nextProps);
-  this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
-}
+    Object.assign(this.props, nextProps);
+    this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
+  }
 
   public getProp<K extends keyof TProps>(key: K): TProps[K] {
     return this.props[key];
@@ -220,7 +220,7 @@ export default abstract class Block<
         }
         return acc;
       },
-      {} as Record<string, unknown>
+      {} as Record<string, unknown>,
     );
   }
 
@@ -238,7 +238,7 @@ export default abstract class Block<
       if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
         value.forEach((child, index) => {
           const stub = this.element!.querySelector(
-            `[data-id="${key}-${index}"]`
+            `[data-id="${key}-${index}"]`,
           );
           const content = child.getContent();
           if (stub && content) {

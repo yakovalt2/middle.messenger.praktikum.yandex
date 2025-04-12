@@ -233,7 +233,7 @@ export default class SettingsPage extends Block {
     console.log("ass");
 
     const inputs = Array.from(
-      this.getContent()?.querySelectorAll("input") || []
+      this.getContent()?.querySelectorAll("input") || [],
     ) as HTMLInputElement[];
 
     const formData: Record<string, string> = {};
@@ -282,7 +282,7 @@ export default class SettingsPage extends Block {
 
       if (response.avatar) {
         console.log("Аватар обновлен, перезагружаем данные...");
-        await this.loadUserData(); 
+        await this.loadUserData();
       } else {
         console.warn("Сервер не вернул URL аватара");
       }

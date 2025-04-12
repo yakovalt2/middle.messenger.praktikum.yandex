@@ -1,7 +1,7 @@
 import Block, { BlockProps } from "../../../framework/Block";
-import { chatService } from "../../../api/services"
+import { chatService } from "../../../api/services";
 import template from "./ChatItem.hbs?raw";
-import store from "../../../framework/Store";  
+import store from "../../../framework/Store";
 
 interface ChatItemProps extends BlockProps {
   id: number;
@@ -10,7 +10,6 @@ interface ChatItemProps extends BlockProps {
 }
 
 class ChatItem extends Block<ChatItemProps> {
-
   constructor(props: ChatItemProps) {
     super("li", {
       ...props,
@@ -23,52 +22,51 @@ class ChatItem extends Block<ChatItemProps> {
   async handleChatClick() {
     const { id, name, selected } = this.props;
     console.log("Chat clicked:", { id, name, selected });
-  
+
     try {
       chatService.disconnect();
 
       store.set("chatsMessages", []);
-  
+
       store.set("selectedChatId", id);
-  
+
       const token = await chatService.getChatToken(id);
-  
+
       chatService.connectToChat(3340, id, token, (message) => {
         if (Array.isArray(message)) {
           message.forEach((msg) => {
             if (msg.type === "message") {
-              this.addMessageToStore(id, msg);  
+              this.addMessageToStore(id, msg);
             }
           });
         } else if (message.type === "message") {
-          this.addMessageToStore(id, message);  
+          this.addMessageToStore(id, message);
         }
       });
     } catch (error) {
       console.error("Failed to get chat token or connect to WebSocket:", error);
     }
   }
-  
-  
 
   // Добавление сообщения в store
   addMessageToStore(chatId: number, message: any) {
     const currentState = store.getState();
     const chatEntry = currentState.chatsMessages.find((c) => c.id === chatId);
-  
+
     if (chatEntry) {
-      store.set("chatsMessages", currentState.chatsMessages.map(c =>
-        c.id === chatId
-          ? { ...c, messages: [...c.messages, message] }
-          : c
-      ));
+      store.set(
+        "chatsMessages",
+        currentState.chatsMessages.map((c) =>
+          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c,
+        ),
+      );
     } else {
       store.set("chatsMessages", [
         ...currentState.chatsMessages,
-        { id: chatId, messages: [message] }
+        { id: chatId, messages: [message] },
       ]);
     }
-  
+
     console.log(store.getState().chatsMessages);
   }
   render(): string {

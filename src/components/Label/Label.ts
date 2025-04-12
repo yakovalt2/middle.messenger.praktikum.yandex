@@ -14,6 +14,6 @@ export default class Label extends Block<LabelProps> {
   }
 
   render(): string {
-    return template
+    return template;
   }
 }

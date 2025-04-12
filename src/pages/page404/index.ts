@@ -1,6 +1,6 @@
-import Block from "../../framework/Block"; 
-import template from "./page404.hbs?raw"; 
-import Button from "../../components/Button/Button"; 
+import Block from "../../framework/Block";
+import template from "./page404.hbs?raw";
+import Button from "../../components/Button/Button";
 
 export default class Page404 extends Block {
   constructor() {

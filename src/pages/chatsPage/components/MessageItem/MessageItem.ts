@@ -9,7 +9,7 @@ interface MessageItemProps extends BlockProps {
 
 class MessageItem extends Block<MessageItemProps> {
   constructor(props: MessageItemProps) {
-    super("li", props);  
+    super("li", props);
   }
 
   render() {

@@ -3,9 +3,11 @@ import store, { StoreEvents, AppState } from "../framework/Store";
 import isEqual from "../utils/isEqual";
 
 export function connect<TProps extends Record<string, unknown>>(
-  mapStateToProps: (state: AppState) => Partial<TProps>
+  mapStateToProps: (state: AppState) => Partial<TProps>,
 ) {
-  return function <C extends new (...args: any[]) => Block<TProps>>(Component: C) {
+  return function <C extends new (...args: any[]) => Block<TProps>>(
+    Component: C,
+  ) {
     return class extends Component {
       private currentMappedProps: Partial<TProps>;
 
