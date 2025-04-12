@@ -119,7 +119,7 @@ export default class ChatService {
       onMessage(data);
     };
 
-    this.socket.onclose = (event) => {
+    this.socket.onclose = () => {
       if (this.pingInterval) clearInterval(this.pingInterval);
       this.socket = null;
     };

@@ -1,4 +1,4 @@
-import { utils, Indexed } from "../utils/utils";
+import { utils } from "../utils/utils";
 import EventBus from "./EventBus";
 
 export interface Chat {

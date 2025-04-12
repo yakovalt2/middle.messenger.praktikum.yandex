@@ -14,7 +14,6 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
   private _pathname: string;
   private _blockClass: BlockClass<TProps>;
   private _block: Block<TProps> | null = null;
-  private _props: { rootQuery: string };
   private _showPageCallback: (page: Block) => void;
 
   constructor(
@@ -25,7 +24,6 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
   ) {
     this._pathname = pathname;
     this._blockClass = view;
-    this._props = props;
     this._showPageCallback = showPageCallback;
   }
 
@@ -109,7 +107,7 @@ export default class Router<
   }
 
   async start(): Promise<void> {
-    window.onpopstate = ((event: PopStateEvent) => {
+    window.onpopstate = (() => {
       this._onRoute(window.location.pathname);
     }).bind(this);
 
