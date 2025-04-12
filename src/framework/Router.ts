@@ -98,7 +98,6 @@ export default class Router<
     const route = new Route(
       pathname,
       block,
-      { rootQuery: this._rootQuery },
       this.showPage.bind(this),
     );
     this.routes.push(route);
