@@ -52,7 +52,7 @@ export default class LoginPage extends Block {
 
   async handleSubmit() {
     const inputs = Array.from(
-      this.getContent()?.querySelectorAll("input") || [],
+      this.getContent()?.querySelectorAll("input") || []
     ) as HTMLInputElement[];
 
     const formData: Record<string, string> = {};
@@ -79,8 +79,14 @@ export default class LoginPage extends Block {
 
         console.log("Redirecting to /chats...");
         router.go("/chats");
-      } catch (error) {
-        console.error("Login failed:", error);
+      } catch (error: any) {
+        console.log(error)
+        if (error.reason === "User already in system") {
+          console.warn("User already in system, redirecting to /chats...");
+          router.go("/chats");
+        } else {
+          console.error("Login failed:", error);
+        }
       }
     } else {
       console.error("Validation failed");

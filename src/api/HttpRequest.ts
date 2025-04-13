@@ -1,16 +1,22 @@
+type ApiError = {
+  status: number;
+  reason?: string;
+  message: string;
+};
+
 export class HttpRequest {
   private static baseUrl: string = "https://ya-praktikum.tech/api/v2/";
 
   static async get<T>(
     url: string,
-    params?: Record<string, string>,
+    params?: Record<string, string>
   ): Promise<T> {
     const queryString = params
       ? "?" + new URLSearchParams(params).toString()
       : "";
     return this.sendRequest<undefined, T>(
       "GET",
-      `${this.baseUrl}${url}${queryString}`,
+      `${this.baseUrl}${url}${queryString}`
     );
   }
 
@@ -35,7 +41,12 @@ export class HttpRequest {
       });
 
       if (!response.ok) {
-        throw new Error(`Ошибка ${response.status}: ${await response.text()}`);
+        const errorResponse = await response.json();
+        throw {
+          status: response.status,
+          reason: errorResponse.reason,
+          message: `Ошибка ${response.status}: ${errorResponse.reason}`,
+        } as ApiError;
       }
 
       return response.json();
@@ -49,7 +60,7 @@ export class HttpRequest {
     method: string,
     url: string,
     body?: T,
-    expectJson: boolean = true,
+    expectJson: boolean = true
   ): Promise<R> {
     try {
       const response = await fetch(url, {
@@ -63,12 +74,19 @@ export class HttpRequest {
       });
 
       if (!response.ok) {
-        let errorMessage = `Ошибка ${response.status}: ${response.statusText}`;
+        let reason: string | undefined;
         try {
           const errorResponse = await response.json();
-          errorMessage += ` - ${errorResponse.reason || JSON.stringify(errorResponse)}`;
-        } catch {}
-        throw new Error(errorMessage);
+          reason = errorResponse.reason;
+        } catch {
+          reason = response.statusText;
+        }
+
+        throw {
+          status: response.status,
+          reason,
+          message: `Ошибка ${response.status}: ${reason}`,
+        } as ApiError;
       }
 
       const contentType = response.headers.get("Content-Type") || "";
