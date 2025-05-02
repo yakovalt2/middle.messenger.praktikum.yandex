@@ -1,5 +1,3 @@
-import "../Loader/Loader.css";
-
 export default function createLoader(): HTMLElement {
   const loader = document.createElement("div");
   loader.className = "loader";

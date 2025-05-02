@@ -17,8 +17,9 @@ interface ChatsPageProps extends BlockProps {
     user_id: number;
   }[];
   showModal?: boolean;
-  userId: number;
+  userId?: number;
 }
+
 class ChatsPage extends Block<ChatsPageProps> {
   constructor(props: ChatsPageProps) {
     super("div", {
@@ -32,7 +33,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
       messagesList: new MessagesList({
         messages: props.messages || [],
-        userId: props.userId,
+        userId: props.userId || 0,
       }),
 
       messageInput: new Input({
