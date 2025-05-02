@@ -1,6 +1,5 @@
 import Block, { BlockProps } from "../framework/Block";
 import Button from "./Button/Button";
-import { authService, chatService, router } from "../api/services";
 
 export default class Navigation extends Block<BlockProps> {
   constructor() {
