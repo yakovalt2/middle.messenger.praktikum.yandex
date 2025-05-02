@@ -37,12 +37,10 @@ class ModalAddUser extends Block<ModalAddUserProps> {
 
   async handleAddUser() {
     const input = this.getContent()?.querySelector(
-      "#addUserInput",
+      "#addUserInput"
     ) as HTMLInputElement;
     const userId = Number(input.value);
     const chatId = store.getState().selectedChatId;
-
-    console.log(chatId);
 
     if (!userId || !chatId) {
       console.error("Не выбран чат или не введён userId");
@@ -51,6 +49,23 @@ class ModalAddUser extends Block<ModalAddUserProps> {
 
     try {
       await chatService.addUserToChat(userId, chatId);
+
+      // Подключение к чату
+      const token = await chatService.getChatToken(chatId);
+      chatService.connectToChat(userId, chatId, token, (message) => {
+        if (Array.isArray(message)) {
+          store.set("messages", [
+            ...(store.getState().chatsMessages || []),
+            ...message,
+          ]);
+        } else {
+          store.set("messages", [
+            ...(store.getState().chatsMessages || []),
+            message,
+          ]);
+        }
+      });
+
       this.props.onClose();
     } catch (error) {
       console.error("Ошибка при добавлении пользователя:", error);

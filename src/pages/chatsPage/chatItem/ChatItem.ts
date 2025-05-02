@@ -27,12 +27,18 @@ class ChatItem extends Block<ChatItemProps> {
       chatService.disconnect();
 
       store.set("chatsMessages", []);
-
       store.set("selectedChatId", id);
 
       const token = await chatService.getChatToken(id);
 
-      chatService.connectToChat(3340, id, token, (message) => {
+      const userId = store.getState().user?.id;
+
+      if (!userId) {
+        console.error("Нет userId. Пользователь не авторизован?");
+        return;
+      }
+
+      chatService.connectToChat(userId, id, token, (message) => {
         if (Array.isArray(message)) {
           message.forEach((msg) => {
             if (msg.type === "message") {
@@ -57,8 +63,8 @@ class ChatItem extends Block<ChatItemProps> {
       store.set(
         "chatsMessages",
         currentState.chatsMessages.map((c) =>
-          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c,
-        ),
+          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c
+        )
       );
     } else {
       store.set("chatsMessages", [
@@ -66,8 +72,7 @@ class ChatItem extends Block<ChatItemProps> {
         { id: chatId, messages: [message] },
       ]);
     }
-
-    console.log(store.getState().chatsMessages);
+    
   }
   render(): string {
     return template;

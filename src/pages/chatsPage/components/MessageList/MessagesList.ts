@@ -3,24 +3,23 @@ import { AppState } from "../../../../framework/Store";
 import { connect } from "../../../../utils/connect";
 import template from "./MessagesList.hbs?raw";
 
+interface Message {
+  id: number;
+  content: string;
+  user_id: number;
+  time: string;
+  isMyMessage?: boolean;
+  avatar?: string | null;
+}
+
 interface MessagesListProps extends BlockProps {
-  messages: {
-    content: string;
-    time: string;
-    isMyMessage: boolean;
-  }[];
+  userId: number;
+  messages: Message[];
 }
 
 class MessagesList extends Block<MessagesListProps> {
   constructor(props: MessagesListProps) {
-    super("ul", {
-      ...props,
-      messages: props.messages.map((msg) => ({
-        content: msg.content,
-        time: new Date(msg.time).toLocaleTimeString(),
-        isMyMessage: true, //поменять
-      })),
-    });
+    super("ul", props);
   }
 
   render() {
@@ -30,13 +29,32 @@ class MessagesList extends Block<MessagesListProps> {
 
 const mapStateToProps = (state: AppState) => {
   const selectedChatId = state.selectedChatId;
-  const chatMessagesEntry = state.chatsMessages.find(
-    (c) => c.id === selectedChatId,
-  );
+  const userId = state.user?.id;
+
+  const messagesRaw =
+    state.chatsMessages.find((chat) => chat.id === selectedChatId)?.messages ||
+    [];
+
+  const messages: Message[] = messagesRaw
+    .slice()
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+    .map((msg) => {
+      const isMyMessage = msg.user_id === userId;
+      return {
+        ...msg,
+        id: msg.id,
+        time: new Date(msg.time).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        isMyMessage,
+      };
+    });
 
   return {
-    messages: chatMessagesEntry ? chatMessagesEntry.messages : [],
+    messages,
+    userId,
   };
 };
 
-export default connect(mapStateToProps)(MessagesList);
+export default connect<MessagesListProps>(mapStateToProps)(MessagesList);

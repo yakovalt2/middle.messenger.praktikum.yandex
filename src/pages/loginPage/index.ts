@@ -2,12 +2,9 @@ import Block from "../../framework/Block";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { validateField } from "../../utils/validation";
-import AuthService from "../../api/services/AuthService";
 import template from "./login.hbs?raw";
-import Router from "../../framework/Router";
-
-const authService = new AuthService();
-const router = new Router("#app");
+import store from "../../framework/Store";
+import { chatService, authService, router } from "../../api/services/index";
 
 export default class LoginPage extends Block {
   constructor() {
@@ -67,23 +64,29 @@ export default class LoginPage extends Block {
 
     if (isValid) {
       try {
+        store.clear();
+
         await authService.login({
           login: formData.login,
           password: formData.password,
         });
 
-        console.log("Login successful, verifying session...");
-
         const user = await authService.getUser();
-        console.log("Authenticated user:", user);
+        store.set("user", user);
 
-        console.log("Redirecting to /chats...");
-        router.go("/chats");
+        const chats = await chatService.getChats();
+        store.set("chats", chats);
+
+        router.go("/messenger");
       } catch (error: any) {
-        console.log(error)
         if (error.reason === "User already in system") {
-          console.warn("User already in system, redirecting to /chats...");
-          router.go("/chats");
+          const user = await authService.getUser();
+          store.set("user", user);
+
+          const chats = await chatService.getChats();
+          store.set("chats", chats);
+
+          router.go("/messenger");
         } else {
           console.error("Login failed:", error);
         }

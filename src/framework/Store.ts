@@ -6,15 +6,20 @@ export interface Chat {
   title: string;
 }
 
-export interface User {
+export interface Message {
   id: number;
+  user_id: number;
+  time: string;
+  content: string;
+  avatar?: string | null;
 }
 
 export interface AppState {
   user: { id: number; name: string } | null;
   chats: Chat[];
-  chatsMessages: { id: number; messages: any[] }[];
+  chatsMessages: { id: number; messages: Message[] }[];
   selectedChatId: number | null;
+  users?: { id: number; avatar: string }[];
 }
 
 export enum StoreEvents {
@@ -38,9 +43,9 @@ class Store extends EventBus {
     this.emit(StoreEvents.Updated);
   }
 
-  public setMessagesForChat(chatId: number, messages: any[]): void {
+  public setMessagesForChat(chatId: number, messages: Message[]): void {
     const chatMessagesIndex = this.state.chatsMessages.findIndex(
-      (chat) => chat.id === chatId,
+      (chat) => chat.id === chatId
     );
 
     if (chatMessagesIndex !== -1) {
@@ -52,13 +57,47 @@ class Store extends EventBus {
     this.emit(StoreEvents.Updated);
   }
 
-  public getMessagesForChat(chatId: number): any[] {
+  public getMessagesForChat(chatId: number): Message[] {
     const chatMessages = this.state.chatsMessages.find(
-      (chat) => chat.id === chatId,
+      (chat) => chat.id === chatId
     );
 
     return chatMessages ? chatMessages.messages : [];
   }
+
+  public clear(): void {
+    this.state = {
+      selectedChatId: null,
+      chatsMessages: [],
+      user: null,
+      chats: [],
+    };
+    this.emit(StoreEvents.Updated);
+  }
+}
+
+export function mapStateToProps(state: AppState, userId: number) {
+  const users = state.users || [];
+  const messages = state.chatsMessages
+    .flatMap((chat) => chat.messages)
+    .map((msg) => {
+      const user = users.find(u => u.id === msg.user_id);
+      const isMyMessage = msg.user_id === userId;
+      return {
+        ...msg,
+        time: new Date(msg.time).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        isMyMessage,
+        avatar: user?.avatar || null,
+      };
+    });
+
+  return {
+    ...state,
+    messages,
+  };
 }
 
 export default new Store();

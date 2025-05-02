@@ -32,6 +32,16 @@ interface ChatTextMessage {
   content: string;
   time: string;
 }
+interface User {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name?: string;
+  login: string;
+  email: string;
+  phone: string;
+  avatar: string | null;
+}
 
 interface PingPongMessage {
   type: "pong";
@@ -73,6 +83,11 @@ export default class ChatService {
     });
   }
 
+  getUsers(chatId: number): Promise<User[]> {
+    console.log('Получаем пользщова')
+    return HttpRequest.get<User[]>(`chats/${chatId}/users`);
+  }
+
   async getChatToken(chatId: number): Promise<string> {
     const host = "https://ya-praktikum.tech";
     const response = await fetch(`${host}/api/v2/chats/token/${chatId}`, {
@@ -94,15 +109,15 @@ export default class ChatService {
     chatId: number,
     token: string,
     onMessage: (
-      message: WebSocketServerMessage | WebSocketServerMessage[],
-    ) => void,
+      message: WebSocketServerMessage | WebSocketServerMessage[]
+    ) => void
   ): void {
     if (this.socket) {
       this.disconnect();
     }
 
     this.socket = new WebSocket(
-      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`,
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
     );
 
     this.socket.onopen = () => {
@@ -114,9 +129,13 @@ export default class ChatService {
     };
 
     this.socket.onmessage = (event) => {
-      const data: WebSocketServerMessage | WebSocketServerMessage[] =
-        JSON.parse(event.data);
-      onMessage(data);
+      try {
+        const data: WebSocketServerMessage | WebSocketServerMessage[] =
+          JSON.parse(event.data);
+        onMessage(data);
+      } catch (e) {
+        console.warn("Ошибка парсинга сообщения WebSocket:", event.data, e);
+      }
     };
 
     this.socket.onclose = () => {

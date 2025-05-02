@@ -18,9 +18,9 @@ export default class App {
   private initRoutes(): void {
     this.router
       .use("/", LoginPage)
-      .use("/login", LoginPage)
+      .use("/sign-up", LoginPage)
       .use("/register", RegisterPage)
-      .use("/chats", ChatsPage)
+      .use("/messenger", ChatsPage)
       .use("/settings", SettingsPage)
       .use("/500", Page500)
       .use("/not-found", Page404);

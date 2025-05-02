@@ -1,6 +1,8 @@
 import Block from "./Block";
 import Navigation from "../components/Navigation";
-import AuthService from "../api/services/AuthService"; // Импорт сервиса авторизации
+import AuthService from "../api/services/AuthService";
+import createLoader from "../components/Loader/Loader";
+import store from "../framework/Store";
 
 const authService = new AuthService();
 
@@ -19,7 +21,7 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
   constructor(
     pathname: string,
     view: BlockClass<TProps>,
-    showPageCallback: (page: Block) => void,
+    showPageCallback: (page: Block) => void
   ) {
     this._pathname = pathname;
     this._blockClass = view;
@@ -48,7 +50,7 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
       this._block = new this._blockClass({} as TProps);
     }
     this._showPageCallback(
-      this._block as unknown as Block<Record<string, unknown>>,
+      this._block as unknown as Block<Record<string, unknown>>
     );
     this._block.show();
   }
@@ -68,38 +70,45 @@ export default class Router<
     if (Router.__instance) {
       return Router.__instance as Router<TProps>;
     }
+
     this._rootQuery = rootQuery;
     this.navigation = new Navigation();
     Router.__instance = this as Router<Record<string, unknown>>;
+
+    this.handleLinkClicks();
   }
 
   private showPage(page: Block): void {
-    const root = document.querySelector(this._rootQuery);
+    const root = document.querySelector(this._rootQuery) as HTMLElement;
     if (!root) {
       console.error(`Root element not found for selector: ${this._rootQuery}`);
       return;
     }
+
     root.innerHTML = "";
+    root.appendChild(createLoader());
 
-    const navigationContent = this.navigation.getContent();
-    if (navigationContent) {
-      root.appendChild(navigationContent);
-    }
+    setTimeout(() => {
+      root.innerHTML = "";
 
-    const pageContent = page.getContent();
-    if (pageContent) {
-      root.appendChild(pageContent);
-    } else {
-      console.error("Page content is null");
-    }
+      const navigationContent = this.navigation.getContent();
+      if (navigationContent) {
+        root.appendChild(navigationContent);
+      }
+
+      const pageContent = page.getContent();
+      if (pageContent) {
+        root.appendChild(pageContent);
+      } else {
+        console.error("Page content is null");
+      }
+
+      root.style.opacity = "1";
+    }, 300); 
   }
 
   use(pathname: string, block: BlockClass<TProps>): this {
-    const route = new Route(
-      pathname,
-      block,
-      this.showPage.bind(this),
-    );
+    const route = new Route(pathname, block, this.showPage.bind(this));
     this.routes.push(route);
     return this;
   }
@@ -110,7 +119,6 @@ export default class Router<
     }).bind(this);
 
     const pathname = window.location.pathname;
-
     const route = this.getRoute(pathname);
 
     if (!route) {
@@ -122,7 +130,7 @@ export default class Router<
     const isAuthenticated = await this.checkAuth();
 
     const isPublicRoute = [
-      "/login",
+      "/sign-up",
       "/register",
       "/500",
       "/not-found",
@@ -130,7 +138,7 @@ export default class Router<
 
     if (!isAuthenticated && !isPublicRoute) {
       console.warn(`Неавторизованный доступ: ${pathname}. Редирект на /login`);
-      this.go("/login");
+      this.go("/sign-up");
       return;
     }
 
@@ -149,7 +157,7 @@ export default class Router<
     const isAuthenticated = await this.checkAuth();
 
     const isPublicRoute = [
-      "/login",
+      "/sign-up",
       "/register",
       "/500",
       "/not-found",
@@ -157,7 +165,7 @@ export default class Router<
 
     if (!isAuthenticated && !isPublicRoute) {
       console.warn(`Неавторизованный доступ: ${pathname}, редирект на /login`);
-      this.go("/login");
+      this.go("/sign-up");
       return;
     }
 
@@ -170,7 +178,9 @@ export default class Router<
   }
 
   go(pathname: string): void {
-    this.history.pushState({}, "", pathname);
+    if (window.location.pathname !== pathname) {
+      this.history.pushState({}, "", pathname);
+    }
     this._onRoute(pathname);
   }
 
@@ -189,11 +199,27 @@ export default class Router<
   private async checkAuth(): Promise<boolean> {
     try {
       const user = await authService.getUser();
+      store.set("user", user);
       console.log("Пользователь авторизован:", user);
       return true;
     } catch (error) {
       console.warn("Пользователь не авторизован");
       return false;
     }
+  }
+
+  // Обработка кликов по ссылкам без перезагрузки
+  private handleLinkClicks(): void {
+    document.addEventListener("click", (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === "A" && target.classList.contains("navbar__link")) {
+        e.preventDefault();
+        const href = target.getAttribute("href");
+        if (href) {
+          const url = new URL(href, window.location.origin);
+          this.go(url.pathname);
+        }
+      }
+    });
   }
 }

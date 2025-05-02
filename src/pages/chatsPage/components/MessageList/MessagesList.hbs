@@ -1,8 +1,8 @@
-<div class="flex-column">
-{{#each messages}}
-  <div class="message {{#if isMyMessage}}my-message{{else}}their-message{{/if}}">
-  <p class="content">{{content}}</p>
-  <span class="time">{{time}}</span>
-</div>
-{{/each}}
+<div class="message-list flex-column">
+  {{#each messages}}
+    <div class="message flex {{#if isMyMessage}}my-message{{else}}their-message{{/if}}">
+      <p class="content">{{content}}</p>
+      <span class="time">{{time}}</span>
+    </div>
+  {{/each}}
 </div>

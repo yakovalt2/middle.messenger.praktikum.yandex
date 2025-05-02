@@ -11,14 +11,14 @@ import ModalAddUser from "./components/ModalAddUser/ModalAddUser";
 
 interface ChatsPageProps extends BlockProps {
   messages?: {
-    id: string;
+    id: number;
     content: string;
-    isMyMessage: boolean;
     time: string;
+    user_id: number;
   }[];
   showModal?: boolean;
+  userId: number;
 }
-
 class ChatsPage extends Block<ChatsPageProps> {
   constructor(props: ChatsPageProps) {
     super("div", {
@@ -30,7 +30,10 @@ class ChatsPage extends Block<ChatsPageProps> {
         },
       }),
 
-      messagesList: new MessagesList({ messages: props.messages || [] }),
+      messagesList: new MessagesList({
+        messages: props.messages || [],
+        userId: props.userId,
+      }),
 
       messageInput: new Input({
         id: "message",
@@ -67,7 +70,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
       openModalButton: new Button({
         id: "openModalButton",
-        label: "Добавить пользователя",
+        label: "+",
         events: { click: () => this.toggleModal() },
       }),
 
@@ -106,7 +109,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
   async handleCreateChat() {
     const input = this.getContent()?.querySelector(
-      "#createChat",
+      "#createChat"
     ) as HTMLInputElement;
     const chatTitle = input?.value;
     if (!chatTitle) return console.error("Введите название чата!");
@@ -121,7 +124,8 @@ class ChatsPage extends Block<ChatsPageProps> {
   async handleLogout() {
     try {
       await authService.logout();
-      router.go("/login");
+      store.clear();
+      router.go("/sign-up");
     } catch (error) {
       console.error("Ошибка выхода:", error);
     }
@@ -131,15 +135,22 @@ class ChatsPage extends Block<ChatsPageProps> {
     store.set("selectedChatId", chatId);
     const userId = store.getState().user?.id;
     if (!userId) return;
-    const token = await chatService.getChatToken(chatId);
-    chatService.connectToChat(userId, chatId, token, (data) => {
-      this.handleIncomingMessage(chatId, data);
-    });
+
+    try {
+      const token = await chatService.getChatToken(chatId);
+      console.log(token)
+
+      chatService.connectToChat(userId, chatId, token, (data) => {
+        this.handleIncomingMessage(chatId, data);
+      });
+    } catch (error) {
+      console.error("Ошибка при подключении к чату:", error);
+    }
   }
 
   handleSendMessage() {
     const input = this.getContent()?.querySelector(
-      "#message",
+      "#message"
     ) as HTMLInputElement;
     const messageContent = input?.value.trim();
     if (!messageContent) return;
@@ -159,8 +170,8 @@ class ChatsPage extends Block<ChatsPageProps> {
     const processMessage = (msg: any) => ({
       id: msg.id,
       content: msg.content,
-      isMyMessage: msg.user_id === currentState.user?.id,
-      time: new Date(msg.time).toLocaleTimeString(),
+      time: msg.time,
+      user_id: msg.user_id,
     });
 
     if (Array.isArray(data)) {
@@ -194,10 +205,13 @@ class ChatsPage extends Block<ChatsPageProps> {
 
 const mapStateToProps = (state: AppState) => {
   const selectedChatId = state.selectedChatId;
+  const chatMessages =
+    state.chatsMessages.find((chat) => chat.id === selectedChatId)?.messages ||
+    [];
+
   return {
-    messages:
-      state.chatsMessages.find((chat) => chat.id === selectedChatId)
-        ?.messages || [],
+    messages: chatMessages,
+    userId: state.user?.id,
   };
 };
 
