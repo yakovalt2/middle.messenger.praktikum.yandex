@@ -109,7 +109,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
   async handleCreateChat() {
     const input = this.getContent()?.querySelector(
-      "#createChat"
+      "#createChat",
     ) as HTMLInputElement;
     const chatTitle = input?.value;
     if (!chatTitle) return console.error("Введите название чата!");
@@ -138,7 +138,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
     try {
       const token = await chatService.getChatToken(chatId);
-      console.log(token)
+      console.log(token);
 
       chatService.connectToChat(userId, chatId, token, (data) => {
         this.handleIncomingMessage(chatId, data);
@@ -150,7 +150,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
   handleSendMessage() {
     const input = this.getContent()?.querySelector(
-      "#message"
+      "#message",
     ) as HTMLInputElement;
     const messageContent = input?.value.trim();
     if (!messageContent) return;

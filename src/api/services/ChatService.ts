@@ -84,7 +84,7 @@ export default class ChatService {
   }
 
   getUsers(chatId: number): Promise<User[]> {
-    console.log('Получаем пользщова')
+    console.log("Получаем пользщова");
     return HttpRequest.get<User[]>(`chats/${chatId}/users`);
   }
 
@@ -109,15 +109,15 @@ export default class ChatService {
     chatId: number,
     token: string,
     onMessage: (
-      message: WebSocketServerMessage | WebSocketServerMessage[]
-    ) => void
+      message: WebSocketServerMessage | WebSocketServerMessage[],
+    ) => void,
   ): void {
     if (this.socket) {
       this.disconnect();
     }
 
     this.socket = new WebSocket(
-      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`,
     );
 
     this.socket.onopen = () => {

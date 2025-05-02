@@ -37,7 +37,7 @@ class ModalAddUser extends Block<ModalAddUserProps> {
 
   async handleAddUser() {
     const input = this.getContent()?.querySelector(
-      "#addUserInput"
+      "#addUserInput",
     ) as HTMLInputElement;
     const userId = Number(input.value);
     const chatId = store.getState().selectedChatId;

@@ -45,7 +45,7 @@ class Store extends EventBus {
 
   public setMessagesForChat(chatId: number, messages: Message[]): void {
     const chatMessagesIndex = this.state.chatsMessages.findIndex(
-      (chat) => chat.id === chatId
+      (chat) => chat.id === chatId,
     );
 
     if (chatMessagesIndex !== -1) {
@@ -59,7 +59,7 @@ class Store extends EventBus {
 
   public getMessagesForChat(chatId: number): Message[] {
     const chatMessages = this.state.chatsMessages.find(
-      (chat) => chat.id === chatId
+      (chat) => chat.id === chatId,
     );
 
     return chatMessages ? chatMessages.messages : [];
@@ -81,7 +81,7 @@ export function mapStateToProps(state: AppState, userId: number) {
   const messages = state.chatsMessages
     .flatMap((chat) => chat.messages)
     .map((msg) => {
-      const user = users.find(u => u.id === msg.user_id);
+      const user = users.find((u) => u.id === msg.user_id);
       const isMyMessage = msg.user_id === userId;
       return {
         ...msg,

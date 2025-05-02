@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "start": "vite build && vite preview --port 3000",
     "lint": "eslint 'src/**/*.{ts,js,tsx,jsx}'",
-    "lint:styles": "stylelint '**/*.css' '**/*.scss'"
+    "lint:styles": "stylelint '**/*.css' '**/*.scss'",
+    "fix-newlines": "prettier --write \"**/*.{ts,js}\""
   },
   "engines": {
     "node": ">=12"

@@ -28,7 +28,7 @@ export default class Navigation extends Block<BlockProps> {
   }
 
   handleLogout() {
-    console.log('handle Logout')
+    console.log("handle Logout");
   }
 
   // async handleLogout() {

@@ -49,7 +49,7 @@ export default class LoginPage extends Block {
 
   async handleSubmit() {
     const inputs = Array.from(
-      this.getContent()?.querySelectorAll("input") || []
+      this.getContent()?.querySelectorAll("input") || [],
     ) as HTMLInputElement[];
 
     const formData: Record<string, string> = {};

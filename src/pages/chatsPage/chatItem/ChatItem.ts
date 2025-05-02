@@ -63,8 +63,8 @@ class ChatItem extends Block<ChatItemProps> {
       store.set(
         "chatsMessages",
         currentState.chatsMessages.map((c) =>
-          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c
-        )
+          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c,
+        ),
       );
     } else {
       store.set("chatsMessages", [
@@ -72,7 +72,6 @@ class ChatItem extends Block<ChatItemProps> {
         { id: chatId, messages: [message] },
       ]);
     }
-    
   }
   render(): string {
     return template;

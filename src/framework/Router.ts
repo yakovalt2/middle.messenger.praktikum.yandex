@@ -21,7 +21,7 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
   constructor(
     pathname: string,
     view: BlockClass<TProps>,
-    showPageCallback: (page: Block) => void
+    showPageCallback: (page: Block) => void,
   ) {
     this._pathname = pathname;
     this._blockClass = view;
@@ -50,7 +50,7 @@ class Route<TProps extends Record<string, unknown> = Record<string, unknown>> {
       this._block = new this._blockClass({} as TProps);
     }
     this._showPageCallback(
-      this._block as unknown as Block<Record<string, unknown>>
+      this._block as unknown as Block<Record<string, unknown>>,
     );
     this._block.show();
   }
@@ -104,7 +104,7 @@ export default class Router<
       }
 
       root.style.opacity = "1";
-    }, 300); 
+    }, 300);
   }
 
   use(pathname: string, block: BlockClass<TProps>): this {
