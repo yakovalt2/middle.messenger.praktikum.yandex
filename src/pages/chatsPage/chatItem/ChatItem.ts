@@ -54,7 +54,6 @@ class ChatItem extends Block<ChatItemProps> {
     }
   }
 
-  // Добавление сообщения в store
   addMessageToStore(chatId: number, message: any) {
     const currentState = store.getState();
     const chatEntry = currentState.chatsMessages.find((c) => c.id === chatId);

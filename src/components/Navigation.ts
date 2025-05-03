@@ -19,7 +19,6 @@ export default class Navigation extends Block<BlockProps> {
   handleClick(e: Event) {
     const target = e.target as HTMLElement;
 
-    // Клик по кнопке "открыть меню"
     if (target.classList.contains("navbar__toggle")) {
       this.setProps({ isOpen: !this.props.isOpen });
       return;
@@ -29,16 +28,7 @@ export default class Navigation extends Block<BlockProps> {
   handleLogout() {
     console.log("handle Logout");
   }
-
-  // async handleLogout() {
-  //   try {
-  //     await authService.logout();
-  //     // router.go("/sign-up");
-  //   } catch (error) {
-  //     console.error("Ошибка выхода:", error);
-  //   }
-  // }
-
+  
   render(): string {
     return `
       <nav class="navbar">

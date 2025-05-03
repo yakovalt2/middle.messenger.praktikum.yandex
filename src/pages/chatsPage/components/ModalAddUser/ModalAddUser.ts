@@ -13,7 +13,6 @@ interface ModalAddUserProps extends BlockProps {
 
 class ModalAddUser extends Block<ModalAddUserProps> {
   constructor(props: ModalAddUserProps) {
-    // Вызов super() сразу в начале конструктора
     super("div", {
       ...props,
       input: new Input({

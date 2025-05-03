@@ -208,7 +208,6 @@ export default class Router<
     }
   }
 
-  // Обработка кликов по ссылкам без перезагрузки
   private handleLinkClicks(): void {
     document.addEventListener("click", (e: MouseEvent) => {
       const target = e.target as HTMLElement;
