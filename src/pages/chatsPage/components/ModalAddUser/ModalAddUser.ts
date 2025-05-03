@@ -68,6 +68,9 @@ class ModalAddUser extends Block<ModalAddUserProps> {
       console.log("Пытаемся получить токен...");
       await chatService.addUserToChat(userId, chatId);
 
+      const updatedUsers = await chatService.getUsers(chatId);
+      store.set("chatUsers", updatedUsers);
+
       const token = await chatService.getChatToken(chatId);
       console.log("Получен токен:", token); 
 
