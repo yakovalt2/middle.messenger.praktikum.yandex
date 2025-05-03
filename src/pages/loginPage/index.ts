@@ -5,6 +5,7 @@ import { validateField } from "../../utils/validation";
 import template from "./login.hbs?raw";
 import store from "../../framework/Store";
 import { chatService, authService, router } from "../../api/services/index";
+import showToast from "../../utils/showToast";
 
 export default class LoginPage extends Block {
   constructor() {
@@ -77,6 +78,7 @@ export default class LoginPage extends Block {
         const chats = await chatService.getChats();
         store.set("chats", chats);
 
+        showToast('Успешный вход', "success")
         router.go("/messenger");
       } catch (error: any) {
         if (error.reason === "User already in system") {

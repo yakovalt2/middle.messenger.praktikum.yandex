@@ -5,6 +5,7 @@ import { validateField } from "../../utils/validation";
 import template from "./register.hbs?raw";
 import AuthService from "../../api/services/AuthService";
 import Router from "../../framework/Router";
+import showToast from "../../utils/showToast";
 
 const authService = new AuthService();
 
@@ -131,14 +132,16 @@ export default class RegisterPage extends Block {
 
         console.log(formData);
 
-        console.log("✅ Регистрация успешна, переходим в чаты...");
+        console.log("Регистрация успешна, переходим в чаты...");
+        showToast("Регистрация успешна, переходим в чаты...", 'success')
         const router = new Router("#app");
-        router.go("/chats");
+        router.go("/messenger");
       } catch (error: any) {
         if (error.message.includes("409")) {
           console.warn("Пользователь уже зарегистрирован, переходим в чаты");
+          showToast("Пользователь уже зарегистрирован, переходим в чаты", 'error')
           const router = new Router("#app");
-          router.go("/chats");
+          router.go("/messenger");
           console.error("Ошибка регистрации:", error);
         } else {
           console.error("Ошибка регистрации:", error);

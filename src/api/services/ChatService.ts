@@ -1,4 +1,5 @@
 import { HttpRequest } from "../HttpRequest";
+import showToast from "../../utils/showToast";
 
 interface Chat {
   id: number;
@@ -97,6 +98,7 @@ export default class ChatService {
     });
 
     if (!response.ok) {
+      showToast(`Ошибка получения токена: ${response.statusText}`, "error");
       throw new Error(`Ошибка получения токена: ${response.statusText}`);
     }
 
@@ -109,15 +111,15 @@ export default class ChatService {
     chatId: number,
     token: string,
     onMessage: (
-      message: WebSocketServerMessage | WebSocketServerMessage[],
-    ) => void,
+      message: WebSocketServerMessage | WebSocketServerMessage[]
+    ) => void
   ): void {
     if (this.socket) {
       this.disconnect();
     }
 
     this.socket = new WebSocket(
-      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`,
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
     );
 
     this.socket.onopen = () => {
@@ -130,12 +132,9 @@ export default class ChatService {
 
     this.socket.onmessage = (event) => {
       try {
-        const data: WebSocketServerMessage | WebSocketServerMessage[] =
-          JSON.parse(event.data);
+        const data = JSON.parse(event.data);
         onMessage(data);
-      } catch (e) {
-        console.warn("Ошибка парсинга сообщения WebSocket:", event.data, e);
-      }
+      } catch (e) {}
     };
 
     this.socket.onclose = () => {

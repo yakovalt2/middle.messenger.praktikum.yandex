@@ -8,6 +8,7 @@ import { connect } from "../../utils/connect";
 import template from "./chats.hbs?raw";
 import ChatsList from "./chatsList/ChatsList";
 import ModalAddUser from "./components/ModalAddUser/ModalAddUser";
+import showToast from "../../utils/showToast";
 
 interface ChatsPageProps extends BlockProps {
   messages?: {
@@ -110,12 +111,16 @@ class ChatsPage extends Block<ChatsPageProps> {
 
   async handleCreateChat() {
     const input = this.getContent()?.querySelector(
-      "#createChat",
+      "#createChat"
     ) as HTMLInputElement;
     const chatTitle = input?.value;
-    if (!chatTitle) return console.error("Введите название чата!");
+    if (!chatTitle) {
+      showToast("Введите название чата", "error");
+      return console.error("Введите название чата!");
+    }
     try {
       await chatService.createChat(chatTitle);
+      showToast("Чат создан", "success");
       this.loadChats();
     } catch (error) {
       console.error("Ошибка создания чата:", error);
@@ -151,7 +156,7 @@ class ChatsPage extends Block<ChatsPageProps> {
 
   handleSendMessage() {
     const input = this.getContent()?.querySelector(
-      "#message",
+      "#message"
     ) as HTMLInputElement;
     const messageContent = input?.value.trim();
     if (!messageContent) return;
