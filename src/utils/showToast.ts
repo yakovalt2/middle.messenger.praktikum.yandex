@@ -8,5 +8,3 @@ export default function showToast(message: string, type: 'success' | 'error') {
       toast.remove();
     }, 5000);
   }
-  
-  
