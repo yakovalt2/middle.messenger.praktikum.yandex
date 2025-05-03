@@ -19,7 +19,13 @@ export interface AppState {
   chats: Chat[];
   chatsMessages: { id: number; messages: Message[] }[];
   selectedChatId: number | null;
-  users?: { id: number; avatar: string }[];
+  users?: { id: number; avatar: string, first_name: string, second_name: string }[];
+  chatUsers?: Array<{
+    id: number;
+    first_name: string;
+    second_name: string;
+    avatar: string | null;
+  }>;
 }
 
 export enum StoreEvents {

@@ -29,6 +29,9 @@ class ChatItem extends Block<ChatItemProps> {
       store.set("chatsMessages", []);
       store.set("selectedChatId", id);
 
+      const users = await chatService.getUsers(id);
+      store.set("chatUsers", users);
+
       const token = await chatService.getChatToken(id);
 
       const userId = store.getState().user?.id;
@@ -62,8 +65,8 @@ class ChatItem extends Block<ChatItemProps> {
       store.set(
         "chatsMessages",
         currentState.chatsMessages.map((c) =>
-          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c,
-        ),
+          c.id === chatId ? { ...c, messages: [...c.messages, message] } : c
+        )
       );
     } else {
       store.set("chatsMessages", [
