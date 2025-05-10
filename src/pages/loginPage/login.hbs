@@ -3,17 +3,17 @@
     <form class="login__form flex" action="/submit-login" method="POST">
       <h1 class="login__title">Вход</h1>
 
-      <div class="login__form-group">
-        {{> Label forAttr="login" text="Логин" }}
-        {{> Input id="login" type="text" name="login" placeholder="Введите ваш логин" value="" }}
+      <div class="login-form__input">
+        {{{loginInput}}}
       </div>
 
-      <div class="login__form-group">
-        {{> Label forAttr="password" text="Пароль" }}
-        {{> Input id="password" type="password" name="password" placeholder="Введите ваш пароль" value="" }}
+      <div class="login-form__input">
+        {{{passwordInput}}}
       </div>
 
-      {{> Button id="login-btn" type="submit" label="Авторизация" className="primary-button" }}
+      <div class="login-form__button">
+        {{{submitButton}}}
+      </div>
 
       <p class="login__help">
         <a class="login__link" href="/register">Впервые? </a>

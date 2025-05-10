@@ -1,8 +1,11 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
   width: 460px;
   background-color: var(--background-color);
   font-family: "Open Sans", sans-serif;
   padding: 15px;
+  gap: 10px;
 
   h2 {
     font-weight: normal;
@@ -19,7 +22,7 @@
     padding: 10px;
 
     input {
-      border: 1px solid rgb(204, 204, 204, 0.4);
+      border: 1px solid rgba(204, 204, 204, 0.4);
       box-sizing: border-box;
       border-radius: 12px;
       font-size: 0.8em;
@@ -37,7 +40,6 @@
   &__chat-list {
     list-style: none;
     margin: 0;
-    padding: 10px;
     gap: 10px;
   }
 
@@ -54,7 +56,7 @@
   background-color: var(--background-color);
   border-radius: 20px;
 
-  &__avatar {
+  &__avatar-img {
     width: 60px;
     height: 60px;
     border: 1px solid #dadada;
@@ -86,16 +88,122 @@
 }
 
 .chat-area {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin-right: 50px;
+  height: 90vh;
+  width: 100%;
+  justify-content: flex-end;
 
   &__placeholder {
     font-size: 1.2em;
     color: #999;
     text-align: center;
+    align-self: center;
+  }
+
+  &__input {
+    gap: 10px;
+
+    &-field {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+    }
+  }
+}
+
+.chat-area__messages ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.message-list {
+  margin-bottom: 10px;
+}
+
+.message {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 6px;
+  margin: 5px 0;
+  max-width: 100%;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 10px;
+  }
+
+  .content {
+    padding: 8px 12px;
+    border-radius: 12px;
+    max-width: 80%;
+    word-wrap:break-word;
+    white-space: pre-wrap; 
+    overflow-wrap: anywhere; 
+  }
+
+  .time {
+    font-size: 0.7em;
+    color: #aaa;
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  &.my-message {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+
+    .content {
+      background-color: #d2f8d2;
+    }
+  }
+
+  &.their-message {
+    flex-direction: row;
+    align-self: flex-start;
+
+    .content {
+      background-color: #dbeafe;
+    }
+  }
+}
+
+.sidebar__create-chat {
+  gap: 10px;
+}
+
+.chat-area__input-field {
+  gap: 10px;
+}
+
+.message-input {
+  min-width: 0;
+}
+
+.chat-users-list {
+  margin-bottom: 6px;
+  gap: 10px;
+
+  .chat-user {
+    background-color: rgb(248, 174, 214);
+    border-radius: 6px;
+    padding: 3px 8px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .remove-user-btn {
+    border: none;
+    background-color: #850e0e;
+    color: white;
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

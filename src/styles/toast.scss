@@ -1,0 +1,18 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #444;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  opacity: 0.9;
+  z-index: 1000;
+  font-size: 16px;
+}
+.toast--success {
+  background-color: #4caf50;
+}
+.toast--error {
+  background-color: #f44336;
+}

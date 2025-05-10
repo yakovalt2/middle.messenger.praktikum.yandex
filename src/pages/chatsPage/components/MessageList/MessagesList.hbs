@@ -1,0 +1,17 @@
+<div class="chat-users-list flex">
+  {{#each chatUsers}}
+    <div class="chat-user flex">
+      <span>{{first_name}} {{second_name}}</span>
+      <button class="remove-user-btn" data-user-id="{{id}}"> x </button>
+    </div>
+  {{/each}}
+</div>
+
+<div class="message-list flex-column">
+  {{#each messages}}
+    <div class="message flex {{#if isMyMessage}}my-message{{else}}their-message{{/if}}">
+      <p class="content">{{content}}</p>
+      <span class="time">{{time}}</span>
+    </div>
+  {{/each}}
+</div>

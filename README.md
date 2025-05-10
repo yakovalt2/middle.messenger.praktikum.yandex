@@ -13,11 +13,16 @@
 Запуск собранного проекта:
 `npm run start` <br/><br/>
 
+Запуск ESLint:
+`npm run lint` <br/>
+Запуск StyleLint:
+`npm run lint:style` <br/><br/>
+
 ### Ссылки на сверстанные страницы:
 
-- [Авторизация](https://messenger-altshuler.netlify.app/login)
+- [Авторизация](https://messenger-altshuler.netlify.app/sign-up)
 - [Регистрация](https://messenger-altshuler.netlify.app/register)
-- [Страница с чатами](https://messenger-altshuler.netlify.app/chats)
+- [Страница с чатами](https://messenger-altshuler.netlify.app/messenger)
 - [Страница настроек профиля](https://messenger-altshuler.netlify.app/settings)
 - [Страница 404](https://messenger-altshuler.netlify.app/404)
 - [Страница 500](https://messenger-altshuler.netlify.app/500)
