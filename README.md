@@ -18,6 +18,10 @@
 Запуск StyleLint:
 `npm run lint:style` <br/><br/>
 
+### Тестирование
+Запуск тестов:
+`npm run test` <br/>
+
 ### Ссылки на сверстанные страницы:
 
 - [Авторизация](https://messenger-altshuler.netlify.app/sign-up)

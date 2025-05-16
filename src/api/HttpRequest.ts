@@ -1,4 +1,4 @@
-type ApiError = {
+export type ApiError = {
   status: number;
   reason?: string;
   message: string;
@@ -32,7 +32,7 @@ export class HttpRequest {
     return this.sendRequest<T, R>("DELETE", `${this.baseUrl}${url}`, body);
   }
 
-  static async putFormData(url: string, body: FormData): Promise<any> {
+  static async putFormData<T>(url: string, body: FormData): Promise<T> {
     try {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: "PUT",
@@ -49,7 +49,7 @@ export class HttpRequest {
         } as ApiError;
       }
 
-      return response.json();
+      return (await response.json()) as T;
     } catch (error) {
       console.error("Ошибка запроса:", error);
       throw error;
@@ -75,11 +75,17 @@ export class HttpRequest {
 
       if (!response.ok) {
         let reason: string | undefined;
-        try {
-          const errorResponse = await response.json();
-          reason = errorResponse.reason;
-        } catch {
-          reason = response.statusText;
+        const contentType = response.headers.get("Content-Type") || "";
+
+        if (contentType.includes("application/json")) {
+          try {
+            const errorResponse = await response.json();
+            reason = errorResponse.reason;
+          } catch {
+            reason = response.statusText || "Internal Server Error";
+          }
+        } else {
+          reason = response.statusText || "Internal Server Error";
         }
 
         throw {

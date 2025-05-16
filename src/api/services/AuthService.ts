@@ -1,4 +1,4 @@
-import { HttpRequest } from "../HttpRequest";
+import { HttpRequest } from "../HttpRequest.ts";
 
 interface RegisterData {
   first_name: string;

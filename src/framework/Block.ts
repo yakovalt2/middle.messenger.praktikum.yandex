@@ -1,4 +1,4 @@
-import EventBus from "./EventBus";
+import EventBus from "./EventBus.ts";
 import Handlebars from "handlebars";
 
 interface BlockMeta<TProps> {

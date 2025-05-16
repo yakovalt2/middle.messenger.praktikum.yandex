@@ -1,8 +1,8 @@
-import Block from "./Block";
-import Navigation from "../components/Navigation";
-import AuthService from "../api/services/AuthService";
-import createLoader from "../components/Loader/Loader";
-import store from "../framework/Store";
+import Block from "./Block.ts";
+import Navigation from "../components/Navigation.ts";
+import AuthService from "../api/services/AuthService.ts";
+import createLoader from "../components/Loader/Loader.ts";
+import store from "../framework/Store.ts";
 
 const authService = new AuthService();
 
@@ -119,6 +119,12 @@ export default class Router<
     }).bind(this);
 
     const pathname = window.location.pathname;
+
+    if (typeof (this as any).__TEST_MOCK_AUTH__ === "boolean") {
+      this._onRoute(pathname);
+      return;
+    }
+
     const route = this.getRoute(pathname);
 
     if (!route) {
@@ -151,6 +157,12 @@ export default class Router<
     if (!route) {
       console.warn(`Маршрут не найден: ${pathname}, редирект на /not-found`);
       this.go("/not-found");
+      return;
+    }
+
+    if (typeof (this as any).__TEST_MOCK_AUTH__ === "boolean") {
+      this._currentRoute = route;
+      route.render();
       return;
     }
 
