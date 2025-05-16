@@ -64,8 +64,8 @@
     "lodash-es": "^4.17.21"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix --cache",
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
       "prettier --write",
       "npm run test"
     ]
