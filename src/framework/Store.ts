@@ -1,5 +1,5 @@
-import { utils } from "../utils/utils";
-import EventBus from "./EventBus";
+import { utils } from "../utils/utils.ts";
+import EventBus from "./EventBus.ts";
 
 export interface Chat {
   id: number;

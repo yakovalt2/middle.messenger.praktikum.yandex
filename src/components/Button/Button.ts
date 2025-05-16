@@ -1,6 +1,8 @@
-import Block, { BlockProps } from "../../framework/Block";
-import template from "./Button.hbs?raw";
-import "./Button.scss";
+import Block, { BlockProps } from "../../framework/Block.ts";
+// import template from "./Button.hbs?raw";
+// import "./Button.scss";
+
+const template = ''
 
 interface ButtonProps extends BlockProps {
   id?: string;

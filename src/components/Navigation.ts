@@ -1,5 +1,5 @@
-import Block, { BlockProps } from "../framework/Block";
-import Button from "./Button/Button";
+import Block, { BlockProps } from "../framework/Block.ts";
+import Button from "./Button/Button.ts";
 
 export default class Navigation extends Block<BlockProps> {
   constructor() {
