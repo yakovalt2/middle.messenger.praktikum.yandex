@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
-import handlebars from "vite-plugin-handlebars";
+import handlebars from 'vite-plugin-handlebars';
 import path from "path";
 
-import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
-import NodeModulesPolyfillPlugin from "@esbuild-plugins/node-modules-polyfill";
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 
 export default defineConfig({
   plugins: [
@@ -20,16 +20,19 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      crypto: "crypto-browserify",
+      crypto: 'crypto-browserify',
     },
   },
   optimizeDeps: {
     esbuildOptions: {
-      plugins: [NodeGlobalsPolyfillPlugin(), NodeModulesPolyfillPlugin()],
+      plugins: [
+        NodeGlobalsPolyfillPlugin(),
+        NodeModulesPolyfillPlugin(),
+      ],
     },
   },
   define: {
-    global: "globalThis",
-    "process.env": {},
+    global: 'globalThis',
+    'process.env': {},
   },
 });
