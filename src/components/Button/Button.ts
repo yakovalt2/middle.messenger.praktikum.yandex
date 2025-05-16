@@ -1,8 +1,5 @@
 import Block, { BlockProps } from "../../framework/Block.ts";
-// import template from "./Button.hbs?raw";
 // import "./Button.scss";
-
-const template = ''
 
 interface ButtonProps extends BlockProps {
   id?: string;
@@ -18,6 +15,9 @@ export default class Button extends Block<ButtonProps> {
   }
 
   render(): string {
-    return template;
+    return `<button id="{{id}}" class="button {{className}}" type="{{type}}">
+  {{label}}
+</button>
+`;
   }
 }
