@@ -9,14 +9,14 @@ export class HttpRequest {
 
   static async get<T>(
     url: string,
-    params?: Record<string, string>,
+    params?: Record<string, string>
   ): Promise<T> {
     const queryString = params
       ? "?" + new URLSearchParams(params).toString()
       : "";
     return this.sendRequest<undefined, T>(
       "GET",
-      `${this.baseUrl}${url}${queryString}`,
+      `${this.baseUrl}${url}${queryString}`
     );
   }
 
@@ -60,7 +60,7 @@ export class HttpRequest {
     method: string,
     url: string,
     body?: T,
-    expectJson: boolean = true,
+    expectJson: boolean = true
   ): Promise<R> {
     try {
       const response = await fetch(url, {
@@ -75,11 +75,17 @@ export class HttpRequest {
 
       if (!response.ok) {
         let reason: string | undefined;
-        try {
-          const errorResponse = await response.json();
-          reason = errorResponse.reason;
-        } catch {
-          reason = response.statusText;
+        const contentType = response.headers.get("Content-Type") || "";
+
+        if (contentType.includes("application/json")) {
+          try {
+            const errorResponse = await response.json();
+            reason = errorResponse.reason;
+          } catch {
+            reason = response.statusText || "Internal Server Error";
+          }
+        } else {
+          reason = response.statusText || "Internal Server Error";
         }
 
         throw {
