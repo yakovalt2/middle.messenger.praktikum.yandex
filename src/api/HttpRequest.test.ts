@@ -2,10 +2,7 @@ import { expect } from "chai";
 import sinon from "sinon";
 import { HttpRequest } from "./HttpRequest.ts";
 import type { ApiError } from "./HttpRequest.ts";
-
-if (!globalThis.fetch) {
-  globalThis.fetch = () => Promise.resolve(new Response());
-}
+import { Response } from "node-fetch";
 
 describe("HttpRequest", () => {
   let fetchStub: sinon.SinonStub;
