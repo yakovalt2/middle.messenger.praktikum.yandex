@@ -1,9 +1,10 @@
 import { expect } from "chai";
 import Router from "../framework/Router.ts";
 import Block from "../framework/Block.ts";
-import jsdomGlobal from 'jsdom-global';
+import sinon from "sinon";
+import jsdomGlobal from "jsdom-global";
 
-jsdomGlobal('', { url: 'http://localhost' });
+jsdomGlobal("", { url: "http://localhost" });
 
 class DummyPage extends Block {
   constructor(props = {}) {
@@ -52,5 +53,23 @@ describe("Router", () => {
     await router.go("/unknown-path");
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(container.innerHTML).to.contain("Not Found");
+  });
+
+  it("должен обновлять URL в истории при переходе", async () => {
+    const spy = sinon.spy(window.history, "pushState");
+    await router.go("/dummy");
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    expect(spy.calledWith({}, "", "/dummy")).to.be.true;
+    spy.restore();
+  });
+
+  it("не должен дублировать переход, если уже на нужном пути", async () => {
+    const spy = sinon.spy(window.history, "pushState");
+    await router.go("/dummy");
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const firstCallCount = spy.callCount;
+    await router.go("/dummy");
+    expect(spy.callCount).to.equal(firstCallCount); 
+    spy.restore();
   });
 });
