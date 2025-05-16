@@ -11,7 +11,7 @@
     "lint": "eslint 'src/**/*.{ts,js,tsx,jsx}'",
     "lint:styles": "stylelint '**/*.css' '**/*.scss'",
     "fix-newlines": "prettier --write \"**/*.{ts,js}\"",
-    "test": "NODE_OPTIONS='--loader ./src/loaders/stub-loader.ts --loader ts-node/esm' mocha"
+    "test": "NODE_OPTIONS='--loader ./src/loaders/stub-loader.ts --loader ts-node/esm' mocha --require ./src/loaders/setup.ts"
   },
   "engines": {
     "node": ">=12"
@@ -24,6 +24,7 @@
     "@eslint/js": "^9.17.0",
     "@types/chai": "^5.2.2",
     "@types/express": "^5.0.0",
+    "@types/jsdom": "^21.1.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.2",
     "@types/page": "^1.11.9",
@@ -34,6 +35,7 @@
     "chai": "^5.2.0",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
+    "jsdom": "^26.1.0",
     "mocha": "^11.2.2",
     "sass": "^1.82.0",
     "stylelint": "^16.12.0",
